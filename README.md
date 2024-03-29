@@ -1,4 +1,4 @@
-# Task Manager Dashboard
+# Task Manager Dashboard - Serflow
 
 **By Anshul Kashyap**
 
@@ -41,7 +41,7 @@ The Task Management Dashboard is a web-based platform designed to streamline tas
 - **Frontend:** Netlify
 - **Backend:** Render
 
-### D - 1
+### Day - 1
 | TASK                                  | Status     |
 | ------------------------------------- | ---------- |
 | Brainstorming ideas                  | Completed  |
@@ -50,14 +50,14 @@ The Task Management Dashboard is a web-based platform designed to streamline tas
 | Document project brief               | Completed  |
 | Decide on logo for project           | Completed  |
 
-### D - 2
+### Day - 2
 | TASK                                  | Status          |
 | ------------------------------------- | --------------- |
-| Low fidelity of Login page            | Not initiated   |
-| Low fidelity of signup/register page | Not initiated   |
-| Learn about kanban                   | Not initiated   |
+| Low fidelity of Login page            | Completed   |
+| Low fidelity of signup/register page | Completed   |
+| Learn about kanban                   | Completed   |
 
-### D - 3
+### Day - 3
 | TASK                                  | Status          |
 | ------------------------------------- | --------------- |
 | Initializing server and client side   | Not initiated   |
