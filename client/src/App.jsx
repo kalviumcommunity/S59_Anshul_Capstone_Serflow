@@ -1,5 +1,5 @@
 import './App.css'
-import Loader from './components/loader'
+import Loader from './components/Loader'
 function App() {
 
   return (
