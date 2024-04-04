@@ -16,8 +16,7 @@ router.post('/post', async (req, res) => {
     const test = new Test(req.body);
     try {
         const savedTest = await test.save();
-        const data = await Test.find();
-        res.status(200).send(data);
+        res.status(200).send(savedTest);
     } catch (err) {
         res.status(400).send(err);
     }
