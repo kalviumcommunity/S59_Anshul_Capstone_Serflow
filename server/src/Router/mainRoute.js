@@ -22,4 +22,15 @@ router.post('/post', async (req, res) => {
     }
 })
 
+router.put('/put/:id', async (req, res) => {
+
+    try {
+        const updatedTest = await Test.findByIdAndUpdate(req.params.id, req.body , {new : true});
+        res.status(200).send(updatedTest);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
+
+
 module.exports = router;
