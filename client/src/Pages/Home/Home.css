@@ -46,6 +46,8 @@
   .box2_img_2 {
     animation: slideUpDownOpposite 30s infinite;
   }
+
+  
   
   @keyframes slideUpDown {
     0%, 100% {
@@ -66,3 +68,8 @@
   }
   
   
+  @media (max-width: 768px) {
+    .imgcar{
+      display: none;
+    }
+  }
