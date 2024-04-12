@@ -42,7 +42,8 @@ The Task Management Dashboard is a web-based platform designed to streamline tas
 - **Backend:** Render
 
 ## Deployed Link 
-- - **Backend:** https://serflow.onrender.com (Render)
+- - **BackEnd:** (Deployed on Render)
+- - **FrontEnd:** https://serflow.netlify.app 
 
 ### Day - 1
 | TASK                                  | Status     |
