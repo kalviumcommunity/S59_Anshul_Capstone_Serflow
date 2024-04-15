@@ -14,7 +14,7 @@ export default function SignupPage(){
                     <h1 className='text-3xl  my-10'>Welcome to <span className='text-red-500'>Serflow</span></h1>
                 <hr />
                 </div>
-                <img src="7-removebg.png" style={{
+                <img src="cover.png" style={{
                     height : '60vh',
                     borderRadius : '20px'
                 }} alt="" />
