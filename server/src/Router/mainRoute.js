@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const Test = require('../Models/testSchema');
-const {validatePost} = require('../Controllers/joi_schema');
+const {validatePost} = require('../Middleware/joi_schema');
 
 router.get('/get', async (req, res) => {
     try {

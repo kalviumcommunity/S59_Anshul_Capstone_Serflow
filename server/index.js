@@ -2,7 +2,7 @@ require("dotenv").config()
 const express = require("express")
 const app = require("./src/app")
 const PORT  = process.env.PORT || 5000
-const connectToMongo = require("./src/Middleware/ConnectToMongo")
+const connectToMongo = require("./src/Controllers/ConnectToMongo")
 
 connectToMongo()
 
