@@ -50,6 +50,7 @@ export default function Signup() {
       if (response.ok) {
         toast.success(responseData.success || "Account created successfully!");
         setSignupSuccess(true);
+        redirect("/login");
       } else {
         toast.error(
           responseData.error ||
@@ -60,7 +61,6 @@ export default function Signup() {
       console.error("Error creating account:", error);
       toast.error("An unexpected error occurred");
     } finally {
-      redirect("/login");
       setLoading(false)
     }
   };
