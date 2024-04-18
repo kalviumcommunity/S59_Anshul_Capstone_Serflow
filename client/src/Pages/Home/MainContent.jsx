@@ -33,8 +33,7 @@ function MainContent() {
               className="text-center w-60"
               sx={{ fontWeight: "100", fontSize: 15 }}
             >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis,
-              ex dignissimos eius animi labore suscipit quibusd
+              Use Serfow to greatly enhance your productivity. Click the link below to get started right away!
             </Typography>
 
             <div className="flex items-center flex-row mt-10 justify-between">
@@ -63,15 +62,17 @@ function MainContent() {
                 </Link>
               </div>
               <div>
-                <Button
-                  variant="text"
-                  sx={{
-                    color: "grey",
-                    fontSize: "18px",
-                  }}
-                >
-                  FAQ
-                </Button>
+                <Link to={'/faq'}>
+                  <Button
+                    variant="text"
+                    sx={{
+                      color: "grey",
+                      fontSize: "18px",
+                    }}
+                  >
+                    FAQ
+                  </Button>
+                </Link>
               </div>
             </div>
 
