@@ -5,10 +5,10 @@ import { GitHub, Instagram } from "@mui/icons-material";
 import {Link} from 'react-router-dom';
 function MainContent() {
   return (
-    <div className="main overflow-hidden flex items-center">
-      <div className="flex flex-row justify-center w-full">
-        <div className="mx-5 p-5 w-1/2  flex flex-col justify-center items-end">
-          <div className="w-fit text-center flex flex-col justify-end items-center">
+    <div className="main">
+      <div className="container-home">
+        <div className="text-container md:mx-5 md:p-5 md:w-1/2  flex flex-col justify-center md:items-end items-center ">
+          <div className="div-text-contaier md:w-fit text-center flex flex-col md:justify-end items-center">
             <Typography
               variant="h4"
               className=""
@@ -86,10 +86,10 @@ function MainContent() {
             </div>
           </div>
         </div>
-        <div className="imgcar mx-10 p-5 w-1/2">
+        <div className="imgcar md:mx-10 md:p-5 w-1/2">
         <Grid className="gridmain" container spacing={2} item xs={6}>
         <Box
-            className="gridskew mt-20"
+            className="gridskew md:mt-20"
             sx={{ display: "flex", flexDirection: "row" }}
         >
             <Box className="box_1" sx={{ flex: 1, opacity: 1 }}>

@@ -7,7 +7,7 @@ function MainContent() {
             <div className='top-bar'>
                 <div className='tp-left'>
                     <div className='pageTile-top'>
-                        <i class='bx bxs-home text-gray-600' ></i>
+                        <i className='bx bxs-home text-gray-600' ></i>
                         <span className='text-gray-600'> / Dashboard</span>
                     </div>
                     <div className='pageTile-bottom'>
@@ -15,15 +15,15 @@ function MainContent() {
                     </div>
                 </div>
                 <div className='tp-right'>
-                  <i class='bx bxs-user-circle' ></i>
-                  <i class='bx bxs-cog' ></i>
-                  <i class='bx bxs-bell' ></i>
+                  <i className='bx bxs-user-circle' ></i>
+                  <i className='bx bxs-cog' ></i>
+                  <i className='bx bxs-bell' ></i>
                 </div>
             </div>
             <div className='cards-box'>
                 <div className='card'>
                     <div className='card icon'>
-                      <i class='bx bx-signal-5 progress-icon text-white'></i>
+                      <i className='bx bx-signal-5 progress-icon text-white'></i>
                     </div>
                     <div className='card-text'>
                       <h3>Tasks in Progress</h3>
@@ -36,7 +36,7 @@ function MainContent() {
                
                 <div className='card'>
                     <div className='card icon'>
-                    <i class='bx bx-revision progress-icon text-white' ></i>
+                    <i className='bx bx-revision progress-icon text-white' ></i>
                     </div>
                     <div className='card-text'>
                       <h3>Tasks in Progress</h3>
@@ -47,7 +47,7 @@ function MainContent() {
                     </div>
                 </div> <div className='card'>
                     <div className='card icon'>
-                    <i class='bx bx-command progress-icon text-white' ></i>
+                    <i className='bx bx-command progress-icon text-white' ></i>
                     </div>
                     <div className='card-text'>
                       <h3>Tasks in Progress</h3>
@@ -58,7 +58,7 @@ function MainContent() {
                     </div>
                 </div> <div className='card'>
                     <div className='card icon'>
-                    <i class='bx bx-layer progress-icon text-white'></i>
+                    <i className='bx bx-layer progress-icon text-white'></i>
                     </div>
                     <div className='card-text'>
                       <h3>Tasks in Progress</h3>
