@@ -19,9 +19,10 @@
 }
 .sidebar{
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
+    top: 3px;
+    left: 3px;
+    border-radius: 10px;
+    height: calc(100vh - 7px);
     width: 80px;
     background-color: #12171e;
     padding: 0.4rem 0.8rem;
@@ -30,7 +31,7 @@
 
 .sidebar.active ~ .main-content{
     left: 250px;
-    width: calc(100% - 250px);
+    width: calc(100% - 260px);
 }
 
 .sidebar.active{
@@ -154,19 +155,31 @@
 
 .sidebar ul li:hover .tooltip{
     opacity: 1;
+    visibility: visible;
 }
+
 .sidebar.active ul li .tooltip{
     display: none;
 }
+.sidebar ul li .tooltip {
+    visibility: hidden;
+}
+
+
 
 .main-content{
     position: relative;
     background-color: #eee;
-    min-height: 100vh;
+    height: 100vh;
+    margin-left: 10px;
     top: 0;
     left: 80px;
-    width: calc(100% - 80px);
+    width: calc(100% - 90px);
     padding: 1rem;
+}
+
+.main-content{
+    overflow: scroll;
 }
 
 .sidebar ul li i{

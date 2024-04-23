@@ -62,7 +62,7 @@ export default function Login() {
 
       const { userName, userId } = await response.json();
       setLoginSuccess(true);
-      redirect('/')
+      redirect('/Dashboard')
       toast.success("Authentication successful");
     } catch (error) {
       console.error("Authentication error:", error);
