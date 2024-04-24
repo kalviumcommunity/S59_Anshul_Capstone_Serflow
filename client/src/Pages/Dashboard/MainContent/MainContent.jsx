@@ -39,7 +39,7 @@ function MainContent() {
                     <i className='bx bx-revision progress-icon text-white' ></i>
                     </div>
                     <div className='card-text'>
-                      <h3>Tasks in Progress</h3>
+                      <h3>Tasks in Review</h3>
                       <h1>15</h1>
                     </div>
                     <div className='card-footer'>
@@ -50,7 +50,7 @@ function MainContent() {
                     <i className='bx bx-command progress-icon text-white' ></i>
                     </div>
                     <div className='card-text'>
-                      <h3>Tasks in Progress</h3>
+                      <h3>Tasks Done</h3>
                       <h1>15</h1>
                     </div>
                     <div className='card-footer'>
@@ -61,7 +61,7 @@ function MainContent() {
                     <i className='bx bx-layer progress-icon text-white'></i>
                     </div>
                     <div className='card-text'>
-                      <h3>Tasks in Progress</h3>
+                      <h3>Tasks Pending</h3>
                       <h1>15</h1>
                     </div>
                     <div className='card-footer'>
