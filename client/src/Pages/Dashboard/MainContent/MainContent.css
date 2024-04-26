@@ -5,6 +5,21 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.main-content{
+    position: relative;
+    background-color: #eee;
+    height: 100vh;
+    margin-left: 10px;
+    top: 0;
+    left: 80px;
+    width: calc(100% - 90px);
+    padding: 1rem;
+}
+
+.main-content{
+    overflow: scroll;
+}
+
 
 
 .pageTile-top{
