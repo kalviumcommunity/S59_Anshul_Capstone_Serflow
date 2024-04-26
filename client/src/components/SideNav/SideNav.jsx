@@ -14,14 +14,14 @@ function SideNav() {
     <div className={`sidebar ${active ? "active" : null} transition-all ease-in-out`}>
           <div className='top'>
               <div className='logo'>
-                <img className='navlogo' src="icon-red.svg" alt="" />
+                <img className='navlogo' src="/icon-red.svg" alt="" />
                 <span>Serflow</span>
               </div>
               <i className='bx bx-menu ham-button' id='btn' onClick={()=>{toggleNav()}}></i>
           </div>
 
           <div className='user'>
-              <img src="profile-picture.jpg" className='user-img' alt="" />
+              <img src="/profile-picture.jpg" className='user-img' alt="" />
               <div>
                 <p className='bold'>Client B.</p>
                 <p>Admin</p>
@@ -37,7 +37,7 @@ function SideNav() {
               <span className='tooltip'>Dashboard</span>
             </li>
             <li>
-              <Link to='/dashboard' className='a'>
+              <Link to='/dashboard/Tasks' className='a'>
               <i className='bx bx-bookmark-alt'></i>
                 <span className='nav-item'>Tasks</span>
               </Link>

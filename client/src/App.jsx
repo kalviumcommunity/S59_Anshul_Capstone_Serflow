@@ -6,6 +6,7 @@ import Logout from './Pages/Logout'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Home from './Pages/Home/Home'
 import Dashboard from './Pages/Dashboard/Dashboard'
+import Tasks from './Pages/Tasks/Tasks'
 function App() {
 
   return (
@@ -17,7 +18,7 @@ function App() {
         <Route path={'/signup'} element={<Signup/>} />
         <Route path={'/logout'} element={<Logout/>} />
         <Route path={'/loader'} element={<Loader/>} />
-        <Route path={'/Dashboard'} element={<Dashboard/>} />
+        <Route path={'/Dashboard/*'} element={<Dashboard/>} />
       </Routes>
     </Router>
     </>
