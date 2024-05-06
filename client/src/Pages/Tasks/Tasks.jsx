@@ -15,7 +15,7 @@ function Tasks({projectModalOpen, setProjectModalOpen}) {
   }
 
   return (
-    <div className='main-content transition-all ease-in-out'>
+    <div className='main-content transition-all ease-in-out dark:bg-[#2b2c37]'>
 
 
       {projects.length > 0 
