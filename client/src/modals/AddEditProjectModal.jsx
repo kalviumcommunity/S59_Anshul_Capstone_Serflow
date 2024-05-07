@@ -70,7 +70,7 @@ function AddEditProjectModal({ setModalOpen, type }) {
       dispatch(projectSlice.actions.addProject({name, newColumns}))
     }else{
       // dispatch
-      console.log({name, newColumns})
+      // console.log({name, newColumns})
       dispatch(projectSlice.actions.editProject({name, newColumns})) 
     }
   }

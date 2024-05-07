@@ -5,3 +5,25 @@
 ::-webkit-scrollbar{
     display: none;
 }
+
+.button{
+    background-color: rgb(99 95 199);
+    border-radius: 9999px;
+    color: rgb(255 255 255);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.75rem;
+    padding: .5rem 1rem;
+    transition-duration: .2s;
+}
+
+.button:hover{
+    opacity: 75%;
+}
+
+.select-status{
+    background-image: url("/icon-chevron-down.svg");
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 16px top 50%;
+}
