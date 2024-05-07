@@ -3,7 +3,7 @@ import { v4 as uuidv4, validate } from 'uuid';
 import {useSelector, useDispatch} from 'react-redux'
 import projectSlice from '../redux/projectSlice';
 
-function AddEditTaskModal({type, device, setOpenTask, taskIndex, prevColIndex = 0}) {
+function AddEditTaskModal({type, device, setOpenTask, taskIndex, setIsTaskModalOpen , prevColIndex = 0}) {
     const dispatch = useDispatch()
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -16,9 +16,11 @@ function AddEditTaskModal({type, device, setOpenTask, taskIndex, prevColIndex = 
             );
 
 
-    const projects = useSelector((state) => state.projects.projects).find((project)=>project.isActive);   
+    const projects = useSelector((state) => state.projects.projects).find((project)=>project.isActive);  
+    const [isFirstLoad, setIsFirstLoad] = useState(true) 
     const columns = projects.columns;
     const col = columns.find((col, index) => index == prevColIndex)
+    const task = col ? col.tasks.find((task, index) => index === taskIndex) : [];
     const [newColIndex, setNewColIndex] = useState(prevColIndex);
     const [status, setStatus] = useState(columns[prevColIndex].name)
 
@@ -26,6 +28,18 @@ function AddEditTaskModal({type, device, setOpenTask, taskIndex, prevColIndex = 
         setSubtasks((prev)=> prev.filter((col) => col.id !== id))
       }
 
+
+    if(type == 'edit' && isFirstLoad){
+        setSubtasks(
+            task.subtasks ? task.subtasks.map((subtask)=>{
+                return {...subtask, id: uuidv4()}
+            }) : null
+        )
+        setTitle(task.title)
+        setDescription(task.description)
+        setIsFirstLoad(false)
+    }
+    
     const onChangeSubtasks = (id, newValue) => {
         setSubtasks((prev)=>{
             const newState = [...prev]
@@ -146,7 +160,7 @@ function AddEditTaskModal({type, device, setOpenTask, taskIndex, prevColIndex = 
                     Subtasks
                 </label>
 
-                {
+                {Subtasks ? 
                     Subtasks.map((subtask, index)=>{
                         return(
                             <div key={index}
@@ -168,7 +182,8 @@ function AddEditTaskModal({type, device, setOpenTask, taskIndex, prevColIndex = 
                                 ></i>
                             </div>
                         )
-                    })
+                    }) 
+                    : null
                 }
                 <button
                 onClick={()=>{

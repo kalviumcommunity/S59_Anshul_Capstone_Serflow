@@ -156,6 +156,7 @@
 .sidebar ul li:hover .tooltip{
     opacity: 1;
     visibility: visible;
+    background-color: white;
 }
 
 .sidebar.active ul li .tooltip{
