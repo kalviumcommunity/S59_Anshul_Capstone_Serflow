@@ -45,9 +45,9 @@ const projectSlice = createSlice({
       const { title, status, description, newColIndex } = action.payload;
       const subtasks = action.payload.Subtasks
       const task = { title, description, subtasks, status };
-      console.log(task)
       const project = state.projects.find((project) => project.isActive);
       const column = project.columns[newColIndex];
+      console.log(column)
       column.tasks.push(task);
     },
     editTask: (state, action) => {

@@ -11,10 +11,10 @@ function AddEditProjectModal({ setModalOpen, type }) {
 
   const [newColumns, setNewColumns] = useState(
     [{
-      name: "Todo", task : [], id : uuidv4()
+      name: "Todo", tasks : [], id : uuidv4()
     },
     {
-      name: "Doing", task : [], id : uuidv4()
+      name: "Doing", tasks : [], id : uuidv4()
     }]
   );
 
@@ -66,6 +66,7 @@ function AddEditProjectModal({ setModalOpen, type }) {
   const onSubmit = (type) => {
     setModalOpen(false)
     if(type == 'add'){
+      //console.log(newColumn)
       // dispatch
       dispatch(projectSlice.actions.addProject({name, newColumns}))
     }else{
@@ -154,7 +155,7 @@ function AddEditProjectModal({ setModalOpen, type }) {
           className="w-full items-center hover:opacity-75 dark:text-[#635fc7] dark:bg-white text-white bg-[#635fc7] py-2 rounded-full mt-2 "
           onClick={()=>{
             setNewColumns((state)=>{
-              return [...state, {name: "", task: [], id: uuidv4()}]
+              return [...state, {name: "", tasks: [], id: uuidv4()}]
             })
           }}
           >
