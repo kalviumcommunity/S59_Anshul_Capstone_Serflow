@@ -20,7 +20,7 @@ function AddEditTaskModal({type, device, setOpenTask, taskIndex, setIsTaskModalO
     const [isFirstLoad, setIsFirstLoad] = useState(true) 
     const columns = projects.columns;
     const col = columns.find((col, index) => index == prevColIndex)
-    const task = col ? col.tasks.find((task, index) => index === taskIndex) : [];
+    const task = col.tasks ? col.tasks.find((task, index) => index === taskIndex) : [];
     const [newColIndex, setNewColIndex] = useState(prevColIndex);
     const [status, setStatus] = useState(columns[prevColIndex].name)
 
