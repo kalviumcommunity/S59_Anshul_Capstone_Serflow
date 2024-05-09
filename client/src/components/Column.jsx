@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { shuffle } from "lodash";
 import { useDispatch, useSelector } from 'react-redux';
 import TaskComponent from './TaskComponent'
+import projectSlice from '../redux/projectSlice'
 
 function Column({colIndex}) {
 
@@ -26,9 +27,34 @@ function Column({colIndex}) {
     useEffect(()=>{
         setColor(shuffle(colors).pop())
     },[dispatch])
+    
+    const handleOnDragOver = (e) => {
+      e.preventDefault();
+      
+    }
+
+    const handleOnDrop = (e) => {
+      const { prevColIndex, taskIndex} = JSON.parse(
+        e.dataTransfer.getData("text")
+    )
+
+    if (colIndex !== prevColIndex) {
+      dispatch(
+        projectSlice.actions.dragTask({
+        colIndex, 
+        prevColIndex,
+        taskIndex
+        })
+      );
+    }
+  }
+
 
   return (
     <div
+    onDrop = {handleOnDrop}
+    onDragOver = {handleOnDragOver}
+
     className='scrollbar-hide mx-5  pt-[40px] min-w-[280px]'
     >
         <p

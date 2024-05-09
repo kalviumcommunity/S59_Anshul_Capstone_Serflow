@@ -43,12 +43,38 @@ const projectSlice = createSlice({
     },
     addTask: (state, action) => {
       const { title, status, description, newColIndex } = action.payload;
-      const subtasks = action.payload.Subtasks
+      const subtasks = action.payload.Subtasks;
       const task = { title, description, subtasks, status };
-      const project = state.projects.find((project) => project.isActive);
-      const column = project.columns[newColIndex];
-      console.log(column)
-      column.tasks.push(task);
+    
+      // Find the active project and the corresponding column
+      const activeProject = state.projects.find((project) => project.isActive);
+      const column = activeProject.columns[newColIndex];
+    
+      // Create a new array of tasks for the column
+      const updatedTasks = [...column.tasks, { ...task }];
+    
+      // Create a new copy of the column with updated tasks
+      const updatedColumn = { ...column, tasks: updatedTasks };
+    
+      // Create a new copy of the project with updated column
+      const updatedProject = {
+        ...activeProject,
+        columns: activeProject.columns.map((col, index) =>
+          index === newColIndex ? updatedColumn : col
+        ),
+      };
+    
+      // Create a new array of projects with updated project
+      const updatedProjects = state.projects.map((project) =>
+        project.isActive ? updatedProject : project
+      );
+    
+      // Return a new state object with updated projects
+      console.log(updatedProject)
+      return {
+        ...state,
+        projects: updatedProjects,
+      };
     },
     editTask: (state, action) => {
       const { title, status, description, Subtasks, prevColIndex, newColIndex, taskIndex } = action.payload;
@@ -69,7 +95,7 @@ const projectSlice = createSlice({
     }, 
     dragTask: (state, action) => {
       const { colIndex, prevColIndex, taskIndex } = action.payload;
-      const project = state.find((project) => project.isActive);
+      const project = state.projects.find((project) => project.isActive);
       const prevCol = project.columns.find((col, i) => i === prevColIndex);
       const task = prevCol.tasks.splice(taskIndex, 1)[0];
       project.columns.find((col, i) => i === colIndex).tasks.push(task);
