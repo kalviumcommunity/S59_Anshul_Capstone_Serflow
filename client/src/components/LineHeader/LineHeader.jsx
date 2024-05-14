@@ -13,7 +13,7 @@ function LineHeader({location, type, setProjectModalOpen, projectModalOpen}) {
   const [openTask, setOpenTask] = useState(false);
   const [isElipseOpen, setIsElipseOpen] = useState(false);
   const [boardType, setBoardType] = useState("add");
-  const project = useSelector(state => state.projects.projects.find((project)=> project.isActive))
+  const project = useSelector(state => state.projects.projects.find(project => project.isActive));
 
   const setOpenEditModal = () => {
     setProjectModalOpen(true);
