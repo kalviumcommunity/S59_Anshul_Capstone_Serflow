@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import projectSlice from "../../../redux/projectSlice";
 import { Link, useNavigate } from "react-router-dom";
-
+import { fetchProjects } from "../../../redux/thunk";
 
 function MainContent({ modalOpen, setModalOpen }) {
   const navigate = useNavigate();
@@ -18,9 +18,16 @@ function MainContent({ modalOpen, setModalOpen }) {
   
   const projects = useSelector((state) => state.projects);
   // const project = projects.find((project) => project.isActive);
+  const loading = useSelector(state => state.projects.loading);
+
+  useEffect(() => {
+    // Fetch projects when the component mounts
+    dispatch(fetchProjects());
+  }, [dispatch]);
 
   useEffect(() => {
     setData(projects)
+    console.log(projects)
   },[projects])
   
 
