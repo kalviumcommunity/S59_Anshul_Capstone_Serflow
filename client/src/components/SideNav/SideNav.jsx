@@ -1,14 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './SideNav.css'
 import { useState } from 'react'
 function SideNav() {
 
   const [active, setActive] = useState(false)
+  const [user, setUser] = useState('USER')
+
 
   function toggleNav() {
     setActive(!active)
   }
+
+  useEffect(() => {
+    const cookie = document.cookie.split(';')
+    cookie.forEach(element => {
+      if (element.includes('userName')) {
+        setUser(element.split('=')[1])
+      }
+    });
+  },[])
+
 
   return (
     <div className={`sidebar ${active ? "active" : null} transition-all ease-in-out`}>
@@ -23,8 +35,8 @@ function SideNav() {
           <div className='user'>
               <img src="/profile-picture.jpg" className='user-img' alt="" />
               <div>
-                <p className='bold'>Client B.</p>
-                <p>Admin</p>
+                <p className='bold'>{user}</p>
+                {/* <p>Admin</p> */}
               </div>
           </div>
           <div className='ul-div'>
@@ -60,7 +72,7 @@ function SideNav() {
           </ul>
           <ul className='logout-ul'>
           <li>
-              <Link to='/dashboard' className='a'>
+              <Link to='/logout' className='a'>
                 <i className='bx bx-log-out'></i>
                 <span className='nav-item'>Logout</span>
               </Link>

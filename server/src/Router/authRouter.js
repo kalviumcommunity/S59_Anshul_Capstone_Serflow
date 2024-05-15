@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const User = require('../Models/userSchema');
+const jwt = require('jsonwebtoken'); 
+
 
 // signup
 router.post("/signup", async (req, res) => {
@@ -40,7 +42,12 @@ router.post("/signup", async (req, res) => {
       if (!user || !user.validatePassword(password)) {
         return res.status(401).json({ error: "Invalid email or password" });
       }
-  
+      
+      const token = jwt.sign({ userId: user._id }, process.env.SECRET, { expiresIn: "1h" });
+
+      res.cookie("token", token);
+      res.cookie("userName", user.username);
+
       res.status(200).json({ userName: user.username, userId: user._id });
     } catch (error) {
       console.error("Error during login:", error);
