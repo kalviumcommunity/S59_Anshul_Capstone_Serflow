@@ -31,8 +31,8 @@ export default function LogoutPage(){
              <AuthHeader
                 heading="Logout from your account"
                 paragraph="Don't want to exit yet?"
-                linkName="Go to Home"
-                linkUrl="/"
+                linkName="Go Back"
+                linkUrl="/Dashboard"
                 userName = {userName}
                 />
             

@@ -43,6 +43,7 @@ export default function Login() {
       // Your authentication API endpoint
       const response = await fetch(API_URI, {
         method: "POST",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },
