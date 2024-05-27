@@ -74,19 +74,19 @@ router.post('/project', async (req, res) => {
         res.status(400).send(err.message);
     }
 });
-// // EDIT PROJECT
-// router.put('/project/:id', async (req, res) => {
-//     const _id = req.params.id;
-//     try {
-//         const updatedProject = await Project.findByIdAndUpdate(_id, req.body, { new: true });
-//         if (!updatedProject) {
-//             return res.status(404).send("Data not found");
-//         }
-//         res.status(200).send(updatedProject);
-//     } catch (err) {
-//         res.status(400).send(err);
-//     }
-// });
+// EDIT PROJECT
+router.put('/project/:id', async (req, res) => {
+    const _id = req.params.id;
+    try {
+        const updatedProject = await Project.findByIdAndUpdate(_id, req.body, { new: true });
+        if (!updatedProject) {
+            return res.status(404).send("Data not found");
+        }
+        res.status(200).send(updatedProject);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
 // // DELETE PROJECT
 // router.delete('/project/:id', async (req, res) => {
 //     const _id = req.params.id;
