@@ -88,18 +88,18 @@ router.put('/project/:id', async (req, res) => {
     }
 });
 // // DELETE PROJECT
-// router.delete('/project/:id', async (req, res) => {
-//     const _id = req.params.id;
-//     try {
-//         const deletedProject = await Project.findByIdAndDelete(_id);
-//         if (!deletedProject) {
-//             return res.status(404).send("Data not found");
-//         }
-//         res.status(200).send(deletedProject);
-//     } catch (err) {
-//         res.status(400).send(err);
-//     }
-// });
+router.delete('/project/:id', async (req, res) => {
+    const _id = req.params.id;
+    try {
+        const deletedProject = await Project.findByIdAndDelete(_id);
+        if (!deletedProject) {
+            return res.status(404).send("Data not found");
+        }
+        res.status(200).send(deletedProject);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
 // // SET PROJECT ACTIVE
 // router.put('/project/active/:id', async (req, res) => {
 //     const _id = req.params.id;
