@@ -101,19 +101,19 @@ router.delete('/project/:id', async (req, res) => {
     }
 });
 // // SET PROJECT ACTIVE
-// router.put('/project/active/:id', async (req, res) => {
-//     const _id = req.params.id;
-//     try {
-//         const projects = await Project.find();
-//         projects.forEach((project, i) => {
-//             project.isActive = project._id == _id ? true : false;
-//             project.save();
-//         });
-//         res.status(200).send(projects);
-//     } catch (err) {
-//         res.status(400).send(err);
-//     }
-// });
+router.put('/project/active/:id', async (req, res) => {
+    const _id = req.params.id;
+    try {
+        const projects = await Project.find();
+        projects.forEach((project, i) => {
+            project.isActive = project._id == _id ? true : false;
+            project.save();
+        });
+        res.status(200).send(projects);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
 // // ADD TASK 
 // router.put('/project/task/:id', async (req, res) => {
 //     const _id = req.params.id;
