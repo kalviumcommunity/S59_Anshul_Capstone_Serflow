@@ -101,24 +101,38 @@ router.delete('/project/:id', async (req, res) => {
     }
 });
 // // SET PROJECT ACTIVE
-// router.put('/project/active/:id', async (req, res) => {
-//     const _id = req.params.id;
-//     try {
-//         const projects = await Project.find();
-//         projects.forEach((project, i) => {
-//             project.isActive = project._id == _id ? true : false;
-//             project.save();
-//         });
-//         res.status(200).send(projects);
-//     } catch (err) {
-//         res.status(400).send(err);
-//     }
-// });
-// // ADD TASK 
-// router.put('/project/task/:id', async (req, res) => {
-//     const _id = req.params.id;
-//     const { title, description, status, newColIndex, Subtasks } = req.body;
-// })
+router.put('/project/active/:id', async (req, res) => {
+    const _id = req.params.id;
+    try {
+        const projects = await Project.find();
+        projects.forEach((project, i) => {
+            project.isActive = project._id == _id ? true : false;
+            project.save();
+        });
+        res.status(200).send(projects);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+// ADD TASK 
+router.put('/project/task/:id', async (req, res) => {
+    const _id = req.params.id;
+    const { title, description, status, newColIndex, Subtasks } = req.body;
+    try {
+        const project = await Project.findById(_id);
+        const newTask = {
+            title,
+            description,
+            status,
+            Subtasks
+        }
+        project.columns[newColIndex].tasks.push(newTask);
+        project.save();
+        res.status(200).send(project);
+    }catch{
+        res.status(400).send(err);
+    }
+})
 
 
 module.exports = router;
