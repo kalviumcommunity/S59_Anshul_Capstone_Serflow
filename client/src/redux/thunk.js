@@ -47,3 +47,37 @@ export const addProjectsAsync = createAsyncThunk(
     }
   }
 );
+
+// Edit project redux thunk
+export const editProjectsAsync = createAsyncThunk(
+  'projects/editProjectsAsync',
+  async (payload) => {
+    const isActive =  false 
+    const project = state.projects.find((project) => project.isActive);
+
+    if (project) {
+      project.name = payload.name;
+      project.columns = payload.newColumns;
+    
+    try {
+      const response = await fetch(`${import.meta.env.VITE_api_uri}/main/project`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(project)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to add project');
+      }
+      
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error('Failed to add project');
+    }
+  }
+}
+);
+
