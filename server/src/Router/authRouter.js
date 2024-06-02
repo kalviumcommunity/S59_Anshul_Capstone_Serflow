@@ -47,7 +47,7 @@ router.post("/signup", async (req, res) => {
       const cookieOptions = {
       httpOnly: false,
       path: '/',
-      // domain: process.env.DOMAIN,
+      domain: process.env.NODE_ENV === 'production' ? 'serflow.netlify.app' : 'localhost',
       maxAge: 60 * 60 * 1000, // 1 hour
       secure: process.env.NODE_ENV === 'production', // Set Secure attribute if in production
       sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax' // Set SameSite to None if needed
