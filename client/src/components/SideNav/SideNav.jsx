@@ -17,12 +17,11 @@ function SideNav() {
   useEffect(() => {
     const cookie = document.cookie.split(';')
     console.log(cookie)
-    // cookie.forEach(element => {
-    //   if (element.includes('userName')) {
-    //     setUser(element.split('=')[1])
-    //   }
-    // });
-    setUser(Cookies.get('userName'))
+    cookie.forEach(element => {
+      if (element.includes('userName')) {
+        setUser(element.split('=')[1])
+      }
+    });
   },[])
 
 
