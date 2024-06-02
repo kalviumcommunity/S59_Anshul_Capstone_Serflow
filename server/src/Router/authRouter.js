@@ -48,7 +48,7 @@ router.post("/signup", async (req, res) => {
       httpOnly: false,
       path: '/',
       maxAge: 60 * 60 * 1000, // 1 hour
-      secure: false, // Set Secure attribute if in production
+      secure: process.env.NODE_ENV === 'production', // Set Secure attribute if in production
       sameSite: 'Lax' // Set SameSite to None if needed
     };
 
