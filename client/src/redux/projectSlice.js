@@ -143,6 +143,7 @@ const projectSlice = createSlice({
       .addCase(fetchProjects.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+        // console.log(action.payload)
       })
       .addCase(addProjectsAsync.pending, (state) => {
         state.loading = true;
@@ -150,7 +151,8 @@ const projectSlice = createSlice({
       })
       .addCase(addProjectsAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.projects = action.payload;
+        state.projects = [...state.projects, action.payload];
+        // console.log(state.projects)
       })
       .addCase(addProjectsAsync.rejected, (state, action) => {
         state.loading = false;

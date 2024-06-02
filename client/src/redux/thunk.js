@@ -51,8 +51,7 @@ export const addProjectsAsync = createAsyncThunk(
 // Edit project redux thunk
 export const editProjectsAsync = createAsyncThunk(
   'projects/editProjectsAsync',
-  async (payload) => {
-    const isActive =  false 
+  async (payload) => { 
     const project = state.projects.find((project) => project.isActive);
 
     if (project) {
@@ -60,8 +59,8 @@ export const editProjectsAsync = createAsyncThunk(
       project.columns = payload.newColumns;
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_api_uri}/main/project`, {
-        method: 'POST',
+      const response = await fetch(`${import.meta.env.VITE_api_uri}/main/project/${project._id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -69,13 +68,13 @@ export const editProjectsAsync = createAsyncThunk(
       });
       
       if (!response.ok) {
-        throw new Error('Failed to add project');
+        throw new Error('Failed to Edit project');
       }
       
       const data = await response.json();
       return data;
     } catch (error) {
-      throw new Error('Failed to add project');
+      throw new Error('Failed to Edit project');
     }
   }
 }
