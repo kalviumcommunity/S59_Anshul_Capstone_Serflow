@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProjects, addProjectsAsync } from './thunk';
+import { fetchProjects, addProjectsAsync, editProjectsAsync } from './thunk';
 import data from "./../data/data.json";
 
 const projectSlice = createSlice({
@@ -67,7 +67,7 @@ const projectSlice = createSlice({
         ),
       };
     
-      // Create a new array of projects with updated project
+      // new array of projects with updated project - Don't direfctly maniplute the state (dosen't work)
       const updatedProjects = state.projects.map((project) =>
         project.isActive ? updatedProject : project
       );
@@ -132,6 +132,7 @@ const projectSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+    // Fetch Project actions
       .addCase(fetchProjects.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -145,6 +146,8 @@ const projectSlice = createSlice({
         state.error = action.error.message;
         // console.log(action.payload)
       })
+
+    // Add Project actions
       .addCase(addProjectsAsync.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -155,6 +158,21 @@ const projectSlice = createSlice({
         // console.log(state.projects)
       })
       .addCase(addProjectsAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      // Edit Project actions
+      .addCase(editProjectsAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(editProjectsAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.projects = [...state.projects, action.payload];
+        // console.log(state.projects)
+      })
+      .addCase(editProjectsAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
