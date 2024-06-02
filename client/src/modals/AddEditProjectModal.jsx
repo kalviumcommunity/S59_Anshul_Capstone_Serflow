@@ -69,7 +69,7 @@ function AddEditProjectModal({ setModalOpen, type }) {
     if(type == 'add'){
       //console.log(newColumn)
       // dispatch
-      console.log({name, newColumns})
+      // console.log({name, newColumns})
       dispatch(addProjectsAsync({name, newColumns}))
       // dispatch(projectSlice.actions.addProject({name, newColumns}))
     }else{
