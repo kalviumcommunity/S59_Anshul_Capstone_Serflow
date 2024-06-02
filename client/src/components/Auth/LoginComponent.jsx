@@ -63,6 +63,7 @@ export default function Login() {
 
       const { userName, userId } = await response.json();
       setLoginSuccess(true);
+      console.log(document.cookie)
       redirect('/Dashboard')
       toast.success("Authentication successful");
     } catch (error) {
