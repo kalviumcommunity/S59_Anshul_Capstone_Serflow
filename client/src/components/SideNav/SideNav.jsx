@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './SideNav.css'
 import { useState } from 'react'
+import Cookies from 'js-cookie'
+
 function SideNav() {
 
   const [active, setActive] = useState(false)
@@ -15,11 +17,12 @@ function SideNav() {
   useEffect(() => {
     const cookie = document.cookie.split(';')
     console.log(cookie)
-    cookie.forEach(element => {
-      if (element.includes('userName')) {
-        setUser(element.split('=')[1])
-      }
-    });
+    // cookie.forEach(element => {
+    //   if (element.includes('userName')) {
+    //     setUser(element.split('=')[1])
+    //   }
+    // });
+    setUser(Cookies.get('userName'))
   },[])
 
 
