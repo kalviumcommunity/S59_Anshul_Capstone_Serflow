@@ -47,6 +47,7 @@ router.post("/signup", async (req, res) => {
       const cookieOptions = {
       httpOnly: false,
       secure : false,
+      sameSite : 'None',
       path: '/',
       maxAge: 60 * 60 * 1000 // 1 hour
       // secure: process.env.NODE_ENV === 'production', // Set Secure attribute if in production
