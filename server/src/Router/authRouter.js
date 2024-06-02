@@ -46,9 +46,8 @@ router.post("/signup", async (req, res) => {
       const token = jwt.sign({ userId: user._id }, process.env.SECRET, { expiresIn: "1h" });
 const cookieOptions = {
       httpOnly: false,
-      // secure: process.env.NODE_ENV === 'production', // // Set Secure attribute if in production
-      secure : false,
-      sameSite: 'None' // Set SameSite to None if needed
+      secure: process.env.NODE_ENV === 'production', // Set Secure attribute if in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax' // Set SameSite to None if needed
     };
 
     res.cookie("token", token, cookieOptions);
