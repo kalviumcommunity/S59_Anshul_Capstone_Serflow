@@ -5,6 +5,7 @@ const User = require('../Models/userSchema');
 const jwt = require('jsonwebtoken'); 
 
 
+
 // signup
 router.post("/signup", async (req, res) => {
     const { username, email, password } = req.body;

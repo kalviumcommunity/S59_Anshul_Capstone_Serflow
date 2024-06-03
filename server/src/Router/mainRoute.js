@@ -5,8 +5,22 @@ const Test = require('../Models/testSchema');
 const {validatePost} = require('../Middleware/joi_schema');
 const {Project} = require('../Models/projectSchema');
 const {projectSchemaJoi} = require('../Middleware/joi_schema');
-const { abort } = require('process');
+const jwt = require('jsonwebtoken');
 
+const authenticateToken = (req, res, next) => {
+    const token = req.cookies.token 
+    // console.log(token, req.cookies)
+    if(token == null){
+      return res.status(401).json({ error: "Unauthorized Access", message: "You are not authorized to access this resource." });
+    }
+    jwt.verify(token, process.env.SECRET, (err, userId) => {
+      if(err){
+        return res.status(403).json({ error: "Forbidden", message: "Access forbidden. Please login again." });
+      }
+      req.userId = userId;
+      next();
+    });
+  }
 
 // router.get('/get', async (req, res) => {
 //     try {
@@ -58,7 +72,7 @@ router.get('/projects', async (req, res) => {
 });
 
 // ADD PROJECT 
-router.post('/project', async (req, res) => {
+router.post('/project',authenticateToken, async (req, res) => {
     try {
         const { error, value } = projectSchemaJoi.validate(req.body);
         if (error) {

@@ -30,6 +30,7 @@ export const addProjectsAsync = createAsyncThunk(
     try {
       const response = await fetch(`${import.meta.env.VITE_api_uri}/main/project`, {
         method: 'POST',
+        credentials : 'include',
         headers: {
           'Content-Type': 'application/json'
         },
