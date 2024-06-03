@@ -46,7 +46,7 @@ router.post("/signup", async (req, res) => {
       const token = jwt.sign({ userId: user._id }, process.env.SECRET, { expiresIn: "1h" });
       const cookieOptions = {
       httpOnly: false,
-      path: '/',
+      path: '/Dashboard',
       domain: process.env.NODE_ENV === 'production' ? 'serflow.netlify.app' : 'localhost',
       maxAge: 60 * 60 * 1000, // 1 hour
       secure: process.env.NODE_ENV === 'production', // Set Secure attribute if in production
