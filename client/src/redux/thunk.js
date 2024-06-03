@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import Cookies from 'js-cookie'
 
 export const fetchProjects = createAsyncThunk(
   'projects/fetchProjects',
@@ -32,7 +33,8 @@ export const addProjectsAsync = createAsyncThunk(
         method: 'POST',
         credentials : 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + Cookies.get('token')
         },
         body: JSON.stringify(project)
       });

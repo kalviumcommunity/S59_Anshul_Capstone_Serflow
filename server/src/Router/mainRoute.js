@@ -8,7 +8,8 @@ const {projectSchemaJoi} = require('../Middleware/joi_schema');
 const jwt = require('jsonwebtoken');
 
 const authenticateToken = (req, res, next) => {
-    const token = req.cookies.token 
+    const token = req.headers.authorization.split(' ')[1] || req.cookies.token;
+    console.log(token)
     console.log(token, req.cookies)
     if(token == null){
       return res.status(401).json({ error: "Unauthorized Access", message: "You are not authorized to access this resource." });
