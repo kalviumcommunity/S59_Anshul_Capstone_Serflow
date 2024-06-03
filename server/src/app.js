@@ -14,18 +14,24 @@ const allowedOrigins = [
 ];
 
 
-app.use(cors({
-    origin:(origin, callback) => {
-      if (!origin) return callback(null, true);
+// app.use(cors({
+//     origin:(origin, callback) => {
+//       if (!origin) return callback(null, true);
   
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true // Allow cookies to be sent with requests
-  }));
+//       if (allowedOrigins.indexOf(origin) !== -1) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error('Not allowed by CORS'));
+//       }
+//     },
+//     credentials: true // Allow cookies to be sent with requests
+//   }));
+
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
+
 app.use("/auth", authRouter)
 app.use("/main", mainRouter)
 
