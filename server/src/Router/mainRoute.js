@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 
 const authenticateToken = (req, res, next) => {
     const token = req.cookies.token 
-    // console.log(token, req.cookies)
+    console.log(token, req.cookies)
     if(token == null){
       return res.status(401).json({ error: "Unauthorized Access", message: "You are not authorized to access this resource." });
     }
