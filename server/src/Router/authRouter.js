@@ -53,11 +53,11 @@ router.post("/signup", async (req, res) => {
       sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax' // Set SameSite to None if needed
     };
 
-    res.cookie("token", token, cookieOptions);
-    res.cookie("userName", user.username, { ...cookieOptions, httpOnly: false }); // userName cookie does not need to be httpOnly
+    // res.cookie("token", token, cookieOptions);
+    // res.cookie("userName", user.username, { ...cookieOptions, httpOnly: false }); // userName cookie does not need to be httpOnly
 
 
-      res.status(200).json({ userName: user.username, userId: user._id });
+      res.status(200).json({ userName: user.username, userId: user._id, token : token });
     } catch (error) {
       console.error("Error during login:", error);
       res.status(500).json({ error: "Internal server error" });

@@ -7,7 +7,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { InfinitySpin } from "react-loader-spinner";
-
+import Cookies from 'js-cookie'
 const fields = loginFields;
 let fieldsState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
@@ -61,7 +61,9 @@ export default function Login() {
         );
       }
 
-      const { userName, userId } = await response.json();
+      const { token, userName, userId } = await response.json();
+      Cookies.set('token', token, { expires: 1 })
+      Cookies.set('userName', userName, { expires: 1 })
       setLoginSuccess(true);
       console.log(document.cookie)
       redirect('/Dashboard')
