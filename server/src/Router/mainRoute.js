@@ -49,13 +49,14 @@ router.post('/project',authenticateToken, async (req, res) => {
         const savedProject = await project.save();
 
         const user = await User.findById(req.body.createdBy);
-
-        if(savedProject){
-            user.userProjects.push(savedProject._id);
-            await user.save();
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
         }
-    
-        res.status(200).send(savedProject);
+
+        user.userProjects.push(savedProject._id);
+        await user.save();
+
+        res.status(200).json(savedProject);
     } catch (err) {
        
         res.status(400).send(err.message);
