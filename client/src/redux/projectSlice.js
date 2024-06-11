@@ -75,7 +75,7 @@ const projectSlice = createSlice({
       );
     
       // Return a new state object with updated projects
-      console.log(updatedProject)
+      // console.log(updatedProject)
       return {
         ...state,
         projects: updatedProjects,
@@ -86,7 +86,7 @@ const projectSlice = createSlice({
       const project = state.projects.find((project) => project.isActive);
       const column = project.columns[prevColIndex];
       const task = column.tasks[taskIndex];
-      console.log(Subtasks)
+      // console.log(Subtasks)
       if (task) {
         task.title = title;
         task.status = status;
@@ -176,7 +176,7 @@ const projectSlice = createSlice({
         if (index !== -1) {
           state.projects[index] = updatedProject; // Update the project in the state
         }
-        console.log("Project updated successfully");
+        // console.log("Project updated successfully");
       })
       .addCase(editProjectsAsync.rejected, (state, action) => {
         state.loading = false;
@@ -211,7 +211,7 @@ const projectSlice = createSlice({
         if (index !== -1) {
           state.projects[index] = updatedProject;
         }
-        console.log("Task added successfully");
+        // console.log("Task added successfully");
       })
       .addCase(addTaskAsync.rejected, (state, action) => {
         state.loading = false;
@@ -230,7 +230,7 @@ const projectSlice = createSlice({
         if (index !== -1) {
           state.projects[index] = updatedProject;
         }
-        console.log("Task dragged successfully");
+        // console.log("Task dragged successfully");
       })
       .addCase(dragTaskAsync.rejected, (state, action) => {
         state.loading = false;
@@ -249,7 +249,7 @@ const projectSlice = createSlice({
         if (index !== -1) {
           state.projects[index] = updatedProject;
         }
-        console.log("Task edited successfully");
+        // console.log("Task edited successfully");
       })
       .addCase(editTaskAsync.rejected, (state, action) => {
         state.loading = false;
@@ -268,7 +268,7 @@ const projectSlice = createSlice({
         if (index !== -1) {
           state.projects[index] = updatedProject;
         }
-        console.log("Subtask Toggled successfully");
+        // console.log("Subtask Toggled successfully");
       })
       .addCase(setSubtaskCompleteAsync.rejected, (state, action) => {
         state.loading = false;
@@ -287,7 +287,7 @@ const projectSlice = createSlice({
         if (index !== -1) {
           state.projects[index] = updatedProject;
         }
-        console.log("Task Status changed successfully");
+        // console.log("Task Status changed successfully");
       })
       .addCase(setTaskStatusAsync.rejected, (state, action) => {
         state.loading = false;
@@ -306,7 +306,7 @@ const projectSlice = createSlice({
         if (index !== -1) {
           state.projects[index] = updatedProject;
         }
-        console.log("Task deleted successfully")
+        // console.log("Task deleted successfully")
       })
       .addCase(deleteTaskAsync.rejected, (state, action) => {
         state.loading = false;

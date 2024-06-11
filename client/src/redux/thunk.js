@@ -67,7 +67,7 @@ export const editProjectsAsync = createAsyncThunk(
   'projects/editProjectsAsync',
   async (payload, {getState}) => { 
     const state = getState();
-    console.log(state)
+  // console.log(state) 
     
     const project = state.projects.projects.find((project) => project.isActive);
     if (project) {
@@ -76,7 +76,7 @@ export const editProjectsAsync = createAsyncThunk(
         name: payload.name,
         columns: payload.newColumns
       };
-      console.log("OK till here", updatedProject, payload);
+    // console.log("OK till here", updatedProject, payload);
     // console.log(`>>> ${import.meta.env.VITE_api_uri}/main/project/${updatedProject._id}`)
     try {
       const response = await fetch(`${import.meta.env.VITE_api_uri}/main/project/${updatedProject._id}`, {
@@ -329,7 +329,7 @@ export const setTaskStatusAsync = createAsyncThunk(
     }
 
     const updatedProject = { ...activeProject, columns };
-    console.log(updatedProject)
+  // console.log(updatedProject)
     try {
       const response = await fetch(`${import.meta.env.VITE_api_uri}/main/project/${updatedProject._id}`, {
         method: 'PUT',

@@ -23,7 +23,7 @@ export default function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(signupState);
+    // console.log(signupState);
     createAccount();
   };
 
@@ -43,7 +43,7 @@ export default function Signup() {
         },
         body: JSON.stringify(signupState),
       });
-      console.log(signupState);
+      // console.log(signupState);
 
       const responseData = await response.json();
 
