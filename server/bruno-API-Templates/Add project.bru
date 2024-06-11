@@ -1,11 +1,11 @@
 meta {
-  name: Edit Project
+  name: Add project
   type: http
-  seq: 3
+  seq: 5
 }
 
-put {
-  url: http://localhost:5000/main/project/66689c6ca307e82c9bf2bdb1
+post {
+  url: http://localhost:5000/main/project/
   body: json
   auth: none
 }
@@ -16,24 +16,20 @@ headers {
 
 body:json {
   {
-      "_id": "66689c6ca307e82c9bf2bdb1",
-      "name": "seven",
-      "createdBy": "661dfe62355b129980e68ea3",
+      
+      "name": "three",
       "isActive": false,
       "columns": [
         {
           "name": "Todo",
           "id": "14d62764-2e8f-45a3-a05f-471aadf6b9ef",
-          "tasks": [],
-          "_id": "66689c6ca307e82c9bf2bdb2"
+          "tasks": []
         },
         {
           "name": "Doing",
           "id": "2268ef65-dab3-4576-83f0-3ee86b8170b2",
-          "tasks": [],
-          "_id": "66689c6ca307e82c9bf2bdb3"
+          "tasks": []
         }
-      ],
-      "__v": 0
+      ]
     }
 }
