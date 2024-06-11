@@ -1,0 +1,35 @@
+meta {
+  name: Add project
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:5000/main/project/
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFkZmU2MjM1NWIxMjk5ODBlNjhlYTMiLCJpYXQiOjE3MTgxMzE2MzUsImV4cCI6MTcxODEzNTIzNX0.TeaGclK86QOYZM0rWRVPlCKezp8nYJubzC_mg_ARics
+}
+
+body:json {
+  {
+      
+      "name": "three",
+      "isActive": false,
+      "columns": [
+        {
+          "name": "Todo",
+          "id": "14d62764-2e8f-45a3-a05f-471aadf6b9ef",
+          "tasks": []
+        },
+        {
+          "name": "Doing",
+          "id": "2268ef65-dab3-4576-83f0-3ee86b8170b2",
+          "tasks": []
+        }
+      ]
+    }
+}
