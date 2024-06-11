@@ -65,7 +65,7 @@ export default function Login() {
       Cookies.set('token', token, { expires: 1 })
       Cookies.set('userName', userName, { expires: 1 })
       setLoginSuccess(true);
-      console.log(document.cookie)
+      // console.log(document.cookie)
       redirect('/Dashboard')
       toast.success("Authentication successful");
     } catch (error) {

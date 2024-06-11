@@ -7,6 +7,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Home from './Pages/Home/Home'
 import Dashboard from './Pages/Dashboard/Dashboard'
 import Tasks from './Pages/Tasks/Tasks'
+import Loading from './components/Loading'
 function App() {
 
   return (

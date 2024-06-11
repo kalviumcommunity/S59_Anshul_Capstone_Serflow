@@ -3,6 +3,7 @@ import { shuffle } from "lodash";
 import { useDispatch, useSelector } from 'react-redux';
 import TaskComponent from './TaskComponent'
 import projectSlice from '../redux/projectSlice'
+import { dragTaskAsync } from './../redux/thunk';
 
 function Column({colIndex}) {
 
@@ -39,13 +40,14 @@ function Column({colIndex}) {
     )
 
     if (colIndex !== prevColIndex) {
-      dispatch(
-        projectSlice.actions.dragTask({
-        colIndex, 
-        prevColIndex,
-        taskIndex
-        })
-      );
+      // dispatch(
+      //   projectSlice.actions.dragTask({
+      //   colIndex, 
+      //   prevColIndex,
+      //   taskIndex
+      //   })
+      // );
+      dispatch(dragTaskAsync({ colIndex, prevColIndex, taskIndex}))
     }
   }
 

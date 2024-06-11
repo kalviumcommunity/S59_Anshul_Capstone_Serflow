@@ -37,7 +37,8 @@ const columnSchema = joi.object({
 const projectSchemaJoi = joi.object({
   name: joi.string().required(),
   isActive: joi.boolean().default(false),
-  columns: joi.array().items(columnSchema)
+  columns: joi.array().items(columnSchema),
+  createdBy: joi.string()
 });
 
 module.exports = {

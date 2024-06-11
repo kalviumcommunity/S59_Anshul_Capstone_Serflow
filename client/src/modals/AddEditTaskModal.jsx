@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4, validate } from 'uuid';
 import {useSelector, useDispatch} from 'react-redux'
 import projectSlice from '../redux/projectSlice';
+import { addTaskAsync, editTaskAsync } from '../redux/thunk';
 
 function AddEditTaskModal({type, device, setOpenTask, taskIndex, setIsTaskModalOpen , prevColIndex = 0}) {
     const dispatch = useDispatch()
@@ -70,23 +71,25 @@ function AddEditTaskModal({type, device, setOpenTask, taskIndex, setIsTaskModalO
 
     const onSubmit = (type) =>{
         if(type == "add"){
-            dispatch(projectSlice.actions.addTask({
-                title,
-                description,
-                Subtasks,
-                status,
-                newColIndex
-            }))
+            // dispatch(projectSlice.actions.addTask({
+            //     title,
+            //     description,
+            //     Subtasks,
+            //     status,
+            //     newColIndex
+            // }))
+            dispatch(addTaskAsync({title, description, Subtasks, status, newColIndex}))
         }else{
-            dispatch(projectSlice.actions.editTask({
-                title,
-                description,
-                Subtasks,
-                status,
-                taskIndex,
-                prevColIndex,
-                newColIndex
-            }))
+            // dispatch(projectSlice.actions.editTask({
+            //     title,
+            //     description,
+            //     Subtasks,
+            //     status,
+            //     taskIndex,
+            //     prevColIndex,
+            //     newColIndex
+            // }))
+            dispatch(editTaskAsync({title, description, Subtasks, status, prevColIndex, newColIndex, taskIndex}))
         }
     }
 

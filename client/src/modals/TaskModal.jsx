@@ -5,6 +5,7 @@ import Subtask from "../components/Subtask";
 import projectSlice from "../redux/projectSlice";
 import DeleteModal from "./DeleteModal";
 import AddEditTaskModal from "./AddEditTaskModal"
+import { deleteTaskAsync, setTaskStatusAsync } from "../redux/thunk";
 
 
 function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
@@ -18,7 +19,7 @@ function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
 
   const task = col.tasks.find((task, index) => index === taskIndex);
   const subtasks = task.subtasks;
-
+  
   let completed = 0;
   subtasks &&
     subtasks.forEach((subtask) => {
@@ -33,6 +34,7 @@ function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
 
+  
   const setOpenEditModal = () => {
     setElipseOpen(false);
     setIsAddTaskModalOpen(true);
@@ -50,7 +52,8 @@ function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
 
   const onDeleteBtnClicked = (e) => {
     if (e.target.textContent === "Delete") {
-      dispatch(projectSlice.actions.deleteTask({ taskIndex, colIndex }));
+      // dispatch(projectSlice.actions.deleteTask({ taskIndex, colIndex }));
+      dispatch(deleteTaskAsync({taskIndex, colIndex}))
       setIsTaskModalOpen(false);
       setIsDeleteModalOpen(false);
     } else {
@@ -64,14 +67,15 @@ function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
         if (e.target != e.currentTarget) {
           return;
         }
-        dispatch(
-          projectSlice.actions.setTaskStatus({
-            taskIndex,
-            colIndex,
-            newColIndex,
-            status,
-          } )
-        );
+        // dispatch(
+        //   projectSlice.actions.setTaskStatus({
+        //     taskIndex,
+        //     colIndex,
+        //     newColIndex,
+        //     status,
+        //   })
+        // );
+        dispatch(setTaskStatusAsync({taskIndex, colIndex, newColIndex, status}))
         setIsTaskModalOpen(false);
       }}
       className="fixed right-0 left-0 top-0 px-2 py-4 overflow-scroll scrollbar-hide z-50 bottom-0 jsutify-center items-center flex bg-[#00000080]"
@@ -102,14 +106,15 @@ function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
         </p>
 
         <p className="pt-6 text-gray-500 tracking-widest text-sm">
-          {subtasks
+          {subtasks.length > 0
             ? `${completed} of ${subtasks.length} Subtasks Completed`
             : "No Subtasks"}
         </p>
         {/* SubTasks Section  */}
 
         <div className="mt-3 space-y-2">
-          {subtasks ? subtasks.map((subtask, index) => {
+   
+          {subtasks.length > 0 ? subtasks.map((subtask, index) => {
             return (
               <Subtask
                 index={index}
@@ -159,6 +164,7 @@ function TaskModal({ colIndex, taskIndex, setIsTaskModalOpen }) {
         setIsTaskModalOpen={setIsTaskModalOpen}
         setOpenTask={setIsTaskModalOpen}
         taskIndex={taskIndex} 
+        prevColIndex={colIndex}
         />
         )
       }

@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProjects, addProjectsAsync, editProjectsAsync } from './thunk';
+import { useDispatch } from 'react-redux';
+import { fetchProjects, addProjectsAsync, editProjectsAsync, deleteProjectsAsync, addTaskAsync, dragTaskAsync, editTaskAsync, setSubtaskCompleteAsync, setTaskStatusAsync, deleteTaskAsync } from './thunk';
 import data from "./../data/data.json";
+
 
 const projectSlice = createSlice({
   name: "projects",
@@ -73,7 +75,7 @@ const projectSlice = createSlice({
       );
     
       // Return a new state object with updated projects
-      console.log(updatedProject)
+      // console.log(updatedProject)
       return {
         ...state,
         projects: updatedProjects,
@@ -84,7 +86,7 @@ const projectSlice = createSlice({
       const project = state.projects.find((project) => project.isActive);
       const column = project.columns[prevColIndex];
       const task = column.tasks[taskIndex];
-      console.log(Subtasks)
+      // console.log(Subtasks)
       if (task) {
         task.title = title;
         task.status = status;
@@ -169,13 +171,148 @@ const projectSlice = createSlice({
       })
       .addCase(editProjectsAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.projects = [...state.projects, action.payload];
-        // console.log(state.projects)
+        const updatedProject = action.payload;
+        const index = state.projects.findIndex(project => project._id === updatedProject._id);
+        if (index !== -1) {
+          state.projects[index] = updatedProject; // Update the project in the state
+        }
+        // console.log("Project updated successfully");
       })
       .addCase(editProjectsAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      });
+        // console.log(action.error.message)
+      })
+
+      // Delete Project actions
+      .addCase(deleteProjectsAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteProjectsAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        const deletedProject = action.payload;
+        state.projects = state.projects.filter(project => project._id !== deletedProject._id);
+      })
+      .addCase(deleteProjectsAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      // add task actions
+      .addCase(addTaskAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addTaskAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        const updatedProject = action.payload;
+        const index = state.projects.findIndex(project => project._id === updatedProject._id);  
+        if (index !== -1) {
+          state.projects[index] = updatedProject;
+        }
+        // console.log("Task added successfully");
+      })
+      .addCase(addTaskAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+      })
+
+      // drag task actions
+      .addCase(dragTaskAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(dragTaskAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        const updatedProject = action.payload;
+        const index = state.projects.findIndex(project => project._id === updatedProject._id);  
+        if (index !== -1) {
+          state.projects[index] = updatedProject;
+        }
+        // console.log("Task dragged successfully");
+      })
+      .addCase(dragTaskAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+      })
+
+      // edit task actions
+      .addCase(editTaskAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(editTaskAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        const updatedProject = action.payload;
+        const index = state.projects.findIndex(project => project._id === updatedProject._id);  
+        if (index !== -1) {
+          state.projects[index] = updatedProject;
+        }
+        // console.log("Task edited successfully");
+      })
+      .addCase(editTaskAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      // set subtask complete
+      .addCase(setSubtaskCompleteAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(setSubtaskCompleteAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        const updatedProject = action.payload;
+        const index = state.projects.findIndex(project => project._id === updatedProject._id);  
+        if (index !== -1) {
+          state.projects[index] = updatedProject;
+        }
+        // console.log("Subtask Toggled successfully");
+      })
+      .addCase(setSubtaskCompleteAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      // set subtask complete
+      .addCase(setTaskStatusAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(setTaskStatusAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        const updatedProject = action.payload;
+        const index = state.projects.findIndex(project => project._id === updatedProject._id);  
+        if (index !== -1) {
+          state.projects[index] = updatedProject;
+        }
+        // console.log("Task Status changed successfully");
+      })
+      .addCase(setTaskStatusAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      // Delete Task actions
+      .addCase(deleteTaskAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteTaskAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        const updatedProject = action.payload;
+        const index = state.projects.findIndex(project => project._id === updatedProject._id);  
+        if (index !== -1) {
+          state.projects[index] = updatedProject;
+        }
+        // console.log("Task deleted successfully")
+      })
+      .addCase(deleteTaskAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
   }
 });
 

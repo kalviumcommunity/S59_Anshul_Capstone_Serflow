@@ -39,7 +39,7 @@ function TaskComponent({taskIndex, colIndex}) {
         <p
         className='font-bold text-xs tracking-tighter mt-2 text-gray-500 '
         > 
-          {subtasks ? `${completed} of ${subtasks.length} completed` : 'No subtasks'}
+          {subtasks.length ? `${completed} of ${subtasks.length} completed` : 'No subtasks'}
         </p>
       </div>
 

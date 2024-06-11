@@ -87,6 +87,13 @@ router.delete('/project/:id', async (req, res) => {
             return res.status(404).send("Data not found");
         }
         // console.log("deletedProject")
+        const user = await User.findById(deletedProject.createdBy);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        user.userProjects = user.userProjects.filter(project => project != _id);
+        await user.save();
+
         res.status(200).send(deletedProject);
     } catch (err) {
         res.status(400).send(err);

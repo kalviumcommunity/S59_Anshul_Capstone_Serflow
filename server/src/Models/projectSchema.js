@@ -42,6 +42,10 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  createdBy: {
+    type: String,
+    required: true
+  },
   isActive: {
     type: Boolean,
     default: false

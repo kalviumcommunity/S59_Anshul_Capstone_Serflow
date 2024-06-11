@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import projectSlice from "./../redux/projectSlice";
-
+import { setSubtaskCompleteAsync } from "../redux/thunk";
 function Subtask({ index, taskIndex, colIndex }) {
   const dispatch = useDispatch();
   const project = useSelector((state) =>
@@ -17,9 +17,11 @@ function Subtask({ index, taskIndex, colIndex }) {
   const checked = subtask.isCompleted;
   
   const onChange = () => {
-    dispatch(
-      projectSlice.actions.setSubtaskCompleted({index, taskIndex, colIndex})
-    )
+    // dispatch(
+    //   projectSlice.actions.setSubtaskCompleted({index, taskIndex, colIndex})
+    // )
+    dispatch(setSubtaskCompleteAsync({index, taskIndex, colIndex}))
+
   }
 
 
