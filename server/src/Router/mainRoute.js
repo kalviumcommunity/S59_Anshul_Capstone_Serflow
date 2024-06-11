@@ -50,8 +50,10 @@ router.post('/project',authenticateToken, async (req, res) => {
 
         const user = await User.findById(req.body.createdBy);
 
-        user.userProjects.push(savedProject._id);
-        await user.save();
+        if(savedProject){
+            user.userProjects.push(savedProject._id);
+            await user.save();
+        }
     
         res.status(200).send(savedProject);
     } catch (err) {
