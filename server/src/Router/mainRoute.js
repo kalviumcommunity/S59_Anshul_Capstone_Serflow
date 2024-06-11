@@ -1,16 +1,17 @@
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const Test = require('../Models/testSchema');
+// const Test = require('../Models/testSchema');
 const {validatePost} = require('../Middleware/joi_schema');
 const {Project} = require('../Models/projectSchema');
 const {projectSchemaJoi} = require('../Middleware/joi_schema');
 const jwt = require('jsonwebtoken');
+const User  = require('./../Models/userSchema');
 
 const authenticateToken = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1] || req.cookies.token;
-    console.log(token)
-    console.log(token, req.cookies)
+    // console.log(token)
+    // console.log(token, req.cookies)
     if(token == null){
       return res.status(401).json({ error: "Unauthorized Access", message: "You are not authorized to access this resource." });
     }
@@ -18,52 +19,17 @@ const authenticateToken = (req, res, next) => {
       if(err){
         return res.status(403).json({ error: "Forbidden", message: "Access forbidden. Please login again." });
       }
-      req.userId = userId;
+      req.body.createdBy = userId.userId;
       next();
     });
   }
 
-// router.get('/get', async (req, res) => {
-//     try {
-//         const data = await Test.find();
-//         res.status(200).send(data);
-//     } catch (err) {
-//         res.status(500).send(err);
-//     }
-// });
-
-// router.post('/post', async (req, res) => {
-//     const test = new Test(req.body);
-//     try {
-//         const error = validatePost(req.body, {abortEarly : false});
-//         if (error.error) {
-//             return res.status(400).send(error.error);
-//         }
-//         const savedTest = await test.save();
-//         res.status(200).send(savedTest);
-//     } catch (err) {
-//         res.status(400).send(err);
-//     }
-// })
-
-// router.put('/put/:id', async (req, res) => {
-
-//     try {
-//         const updatedTest = await Test.findByIdAndUpdate(req.params.id, req.body , {new : true});
-//         if(!updatedTest){
-//             res.status(404).send("Data not found");
-//         }
-//         res.status(200).send(updatedTest);
-//     } catch (err) {
-//         res.status(400).send(err);
-//     }
-// })
 
 // Get PROJECTS
-router.get('/projects', async (req, res) => {
+router.get('/projects', authenticateToken, async (req, res) => {
     try {
         
-        const projects = await Project.find();
+        const projects = await Project.find({createdBy: req.body.createdBy});
     
         res.status(200).send(projects);
     } catch (err) {
@@ -80,10 +46,17 @@ router.post('/project',authenticateToken, async (req, res) => {
             return res.status(400).send(error);
         }
         const project = new Project(value);
-    
         const savedProject = await project.save();
-    
-        res.status(200).send(savedProject);
+
+        const user = await User.findById(req.body.createdBy);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.userProjects.push(savedProject._id);
+        await user.save();
+
+        res.status(200).json(savedProject);
     } catch (err) {
        
         res.status(400).send(err.message);
@@ -92,13 +65,16 @@ router.post('/project',authenticateToken, async (req, res) => {
 // EDIT PROJECT
 router.put('/project/:id', async (req, res) => {
     const _id = req.params.id;
+    // console.log(req.body)
     try {
         const updatedProject = await Project.findByIdAndUpdate(_id, req.body, { new: true });
         if (!updatedProject) {
             return res.status(404).send("Data not found");
         }
+        // console.log("updatedProject")
         res.status(200).send(updatedProject);
     } catch (err) {
+        // console.log("Failed")
         res.status(400).send(err);
     }
 });
@@ -110,6 +86,7 @@ router.delete('/project/:id', async (req, res) => {
         if (!deletedProject) {
             return res.status(404).send("Data not found");
         }
+        // console.log("deletedProject")
         res.status(200).send(deletedProject);
     } catch (err) {
         res.status(400).send(err);
