@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {v4 as uuidv4, validate} from 'uuid';
 import {useDispatch, useSelector} from "react-redux";
 import projectSlice from "./../redux/projectSlice";
-import { addProjectsAsync } from "../redux/thunk";
+import { addProjectsAsync, editProjectsAsync } from "../redux/thunk";
 
 function AddEditProjectModal({ setModalOpen, type }) {
 
@@ -75,7 +75,8 @@ function AddEditProjectModal({ setModalOpen, type }) {
     }else{
       // dispatch
       // console.log({name, newColumns})
-      dispatch(projectSlice.actions.editProject({name, newColumns})) 
+      // dispatch(projectSlice.actions.editProject({name, newColumns})) 
+      dispatch(editProjectsAsync({name, newColumns}))
     }
   }
 

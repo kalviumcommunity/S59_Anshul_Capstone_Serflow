@@ -6,6 +6,7 @@ import ElipseMenu from "./ElipseMenu";
 import DeleteModal from "../../modals/DeleteModal";
 import { useSelector, useDispatch } from "react-redux";
 import projectSlice from "../../redux/projectSlice";
+import { deleteProjectsAsync } from "./../../redux/thunk";
 
 function LineHeader({location, type, setProjectModalOpen, projectModalOpen}) {
   const dispatch = useDispatch(); 
@@ -27,8 +28,10 @@ function LineHeader({location, type, setProjectModalOpen, projectModalOpen}) {
 
   const onDeleteBtnClicked = (e) => {
     if (e.target.textContent === "Delete") {
-      dispatch(projectSlice.actions.deleteProject());
-      dispatch(projectSlice.actions.setProjectActive({ index: 0 }));
+      // dispatch(projectSlice.actions.deleteProject());
+      dispatch(deleteProjectsAsync())
+      const projectLength = useSelector(state => state.projects.projects.length);
+      dispatch(projectSlice.actions.setProjectActive({ index: projectLength - 1}));
       setIsDeleteModalOpen(false);
     } else {
       setIsDeleteModalOpen(false);

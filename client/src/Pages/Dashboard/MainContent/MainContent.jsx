@@ -27,7 +27,7 @@ function MainContent({ modalOpen, setModalOpen }) {
 
   useEffect(() => {
     setData(projects)
-    console.log(projects)
+    // console.log(projects)
   },[projects])
   
 
@@ -35,7 +35,7 @@ function MainContent({ modalOpen, setModalOpen }) {
     <div className="main-content transition-all ease-in-out dark:bg-[#2b2c37]">
       <div className="">
         <LineHeader location={"Dashboard"} setProjectModalOpen={setModalOpen} modalOpen={modalOpen}/>
-        <div className="cards-box">
+        {/* <div className="cards-box">
           <div className="card">
             <div className="card icon">
               <i className="bx bx-signal-5 progress-icon text-white"></i>
@@ -84,7 +84,7 @@ function MainContent({ modalOpen, setModalOpen }) {
               <h1>Card footer</h1>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="mt-10 text-gray-600 font-semibold text-xl">
           <h1>Projects</h1>
@@ -97,6 +97,7 @@ function MainContent({ modalOpen, setModalOpen }) {
                 <div className="card cursor-pointer" key={index} onClick={
                   ()=>{
                     dispatch(projectSlice.actions.setProjectActive({index}))
+                    localStorage.setItem('activeProjectIndex', index)
                     navigate('/dashboard/tasks')
                   }
                 
