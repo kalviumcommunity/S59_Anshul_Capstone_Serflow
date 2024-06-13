@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { InfinitySpin } from "react-loader-spinner";
 import Cookies from 'js-cookie'
+import GoogleButton from 'react-google-button'
 const fields = loginFields;
 let fieldsState = {};
 fields.forEach((field) => (fieldsState[field.id] = ""));
@@ -29,10 +30,10 @@ export default function Login() {
     authenticateUser();
   };
 
-  const redirect = (path) =>{
-    setTimeout(()=>{
+  const redirect = (path) => {
+    setTimeout(() => {
       window.location.href = `${path}`
-    },1000)
+    }, 1000)
   }
 
   //Handle Login API Integration here
@@ -57,7 +58,7 @@ export default function Login() {
         const errorData = await response.json();
         throw new Error(
           errorData.error ||
-            "Failed to authenticate. Please check your credentials."
+          "Failed to authenticate. Please check your credentials."
         );
       }
 
@@ -117,6 +118,15 @@ export default function Login() {
       ) : (
         <FormAction handleSubmit={handleSubmit} text="Login" />
       )}
+
+        <div className="flex items-center justify-center">
+            <GoogleButton
+              onClick={() => {
+                window.location.href = `${import.meta.env.VITE_api_uri}/oauth/google`
+              }}
+            />
+        </div>
+
 
       <br />
       <ToastContainer />

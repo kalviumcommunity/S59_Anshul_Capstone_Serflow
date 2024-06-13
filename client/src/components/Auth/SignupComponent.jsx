@@ -5,6 +5,7 @@ import Input from "./Input";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { InfinitySpin } from "react-loader-spinner";
+import GoogleButton from 'react-google-button'
 
 const fields = signupFields;
 let fieldsState = {};
@@ -54,7 +55,7 @@ export default function Signup() {
       } else {
         toast.error(
           responseData.error ||
-            "Failed to create account. Please try again later."
+          "Failed to create account. Please try again later."
         );
       }
     } catch (error) {
@@ -101,6 +102,16 @@ export default function Signup() {
         ) : (
           <FormAction handleSubmit={handleSubmit} text="Signup" />
         )}
+        
+        <br />
+
+        <div className="flex items-center justify-center">
+          <GoogleButton
+            onClick={() => {
+              window.location.href = `${import.meta.env.VITE_api_uri}/oauth/google`
+            }}
+          />
+        </div>
 
         <ToastContainer />
       </div>
