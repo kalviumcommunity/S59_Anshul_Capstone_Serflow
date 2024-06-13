@@ -8,8 +8,9 @@ const cors = require('cors')
 const passport = require('passport')
 const session = require('express-session');
 require('./Controllers/passport-config');
+
 app.use(session({
-  secret: 'cats',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
 }))
