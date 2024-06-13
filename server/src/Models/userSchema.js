@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
+const { required } = require('joi');
 
 const userSchema = new mongoose.Schema({
+    oauthId: {
+      type: String,
+      required:false
+    },
     username: {
       type: String,
       required: true,
@@ -9,6 +14,11 @@ const userSchema = new mongoose.Schema({
     email: {
       type: String,
       required: true,
+    },
+    image : {
+      type: String,
+      default : 'https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png',
+      required:false
     },
       password: {
       hash: String,

@@ -8,6 +8,7 @@ import Home from './Pages/Home/Home'
 import Dashboard from './Pages/Dashboard/Dashboard'
 import Tasks from './Pages/Tasks/Tasks'
 import Loading from './components/Loading'
+import GoogleSuccess from './components/Auth/GoogleSuccess'
 function App() {
 
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path={'/logout'} element={<Logout/>} />
         <Route path={'/loader'} element={<Loader/>} />
         <Route path={'/Dashboard/*'} element={<Dashboard/>} />
+        <Route path={'/oauth'} element={<GoogleSuccess/>} />
       </Routes>
     </Router>
     </>
