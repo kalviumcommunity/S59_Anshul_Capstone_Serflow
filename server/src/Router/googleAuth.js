@@ -21,5 +21,5 @@ router.get('/google/callback',
 router.get('/failureRedirect', (req, res) => {
   res.send('<h1>Failure Authenticating with Google</h1>');
 });
-
+// 
 module.exports = router;
