@@ -113,12 +113,15 @@ function ImageUploadModal({setImageModalOpen}) {
         <div
         className='flex justify-center mt-4 w-full'
         >
-            {loading ?  <InfinitySpin
+            {loading ?  <div
+            className='mr-10'>
+              <InfinitySpin
               visible={true}
               width="120"
-              color="#000"
+              color="green"
               ariaLabel="infinity-spin-loading"
-            /> : null }
+            />
+            </div> : null }
             {
                 changeSuccess ? <div className="text-white  text-center text-md bg-green-600 p-2 rounded-lg w-full">Profile image changed successfully</div> : null
             }
