@@ -4,22 +4,24 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import {Puff} from 'react-loader-spinner'
+import Cookies from 'js-cookie'
 
 export default function LogoutPage(){
 
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
-    const userNameCookie = document.cookie.split(';').find(cookie => cookie.includes('userName'));
-    const userName = userNameCookie ? userNameCookie.split('=')[1] : '';
+    const userName = Cookies.get('userName');
 
     const handleLogout = async() => {
         // console.log("done")
         setLoading(true);
-        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        document.cookie = 'userName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        Cookies.remove('token');
+        Cookies.remove('userName');
+        Cookies.remove('profileImage');
+        Cookies.remove('data');
         setTimeout(() => {
-            toast.success('Logged out successfully');
+            // toast.success('Logged out successfully');
             setLoading(false);
             window.location.href = '/login';
         }, 1500);

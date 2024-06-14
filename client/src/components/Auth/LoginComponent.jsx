@@ -62,9 +62,10 @@ export default function Login() {
         );
       }
 
-      const { token, userName, userId } = await response.json();
+      const { token, userName, userId, profileImage } = await response.json();
       Cookies.set('token', token, { expires: 1 })
       Cookies.set('userName', userName, { expires: 1 })
+      Cookies.set('profileImage', profileImage, { expires: 1 })
       setLoginSuccess(true);
       // console.log(document.cookie)
       redirect('/Dashboard')
