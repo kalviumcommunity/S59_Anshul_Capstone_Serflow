@@ -3,6 +3,38 @@ import { Link } from 'react-router-dom'
 import './SideNav.css'
 import { useState } from 'react'
 import Cookies from 'js-cookie'
+import Avatar from '@mui/material/Avatar';
+
+// MUI code for AVATAR GENERATION
+function stringToColor(string) {
+  let hash = 0;
+  let i;
+
+  /* eslint-disable no-bitwise */
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = '#';
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
+  }
+  /* eslint-enable no-bitwise */
+
+  return color;
+}
+
+function stringAvatar(string) {
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+    },
+    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+  };
+}
+
 
 function SideNav() {
 
@@ -15,14 +47,9 @@ function SideNav() {
   }
 
   useEffect(() => {
-    const cookie = document.cookie.split(';')
-    // console.log(cookie)
-    cookie.forEach(element => {
-      if (element.includes('userName')) {
-        setUser(element.split('=')[1])
-      }
-    });
-  },[])
+    Cookies.get('userName') && setUser(Cookies.get('userName'))
+    },[])
+  
 
 
   return (
@@ -36,7 +63,12 @@ function SideNav() {
           </div>
 
           <div className='user'>
-              <img src="/profile-picture.jpg" className='user-img' alt="" />
+              {/* <img src={
+                Cookies.get('profileImage') ? Cookies.get('profileImage') : "/profile-picture.jpg"
+              } className='user-img' alt="" /> */}
+
+              <Avatar alt={user} src={Cookies.get('profileImage') ? Cookies.get('profileImage') : "/profile-picture.jpg"}/>
+
               <div>
                 <p className='bold'>{user}</p>
                 {/* <p>Admin</p> */}

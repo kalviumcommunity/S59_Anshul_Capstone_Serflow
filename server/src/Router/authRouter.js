@@ -4,7 +4,23 @@ const router = express.Router();
 const User = require('../Models/userSchema');
 const jwt = require('jsonwebtoken'); 
 
+const authenticateToken = (req, res, next) => {
+  const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
 
+  if (!token) return res.status(401).json({ message: 'Access token is missing' });
+
+  jwt.verify(token, process.env.SECRET, (err, user) => {
+    if (err) {
+      if (err.name === 'TokenExpiredError') {
+        return res.status(401).json({ message: 'Access token expired' });
+      }
+      return res.status(403).json({ message: 'Access token is invalid' });
+    }
+
+    req.user = user;
+    next();
+  });
+};
 
 // signup
 router.post("/signup", async (req, res) => {
@@ -58,9 +74,40 @@ router.post("/signup", async (req, res) => {
     // res.cookie("userName", user.username, { ...cookieOptions, httpOnly: false }); // userName cookie does not need to be httpOnly
 
 
-      res.status(200).json({ userName: user.username, userId: user._id, token : token });
+      res.status(200).json({ userName: user.username, userId: user._id, token : token, profileImage: user.image});
     } catch (error) {
       console.error("Error during login:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+
+  // User Object
+  console.log()
+  router.get("/user",authenticateToken, async (req, res) => {
+    const token = req.headers.authorization.split(" ")[1];
+    const { userId } = jwt.verify(token, process.env.SECRET);
+    // console.log(userId);
+    try {
+      const user = await User.findById(userId);
+      res.status(200).json({ user });
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  // Update Profile Image
+  router.patch("/user", async (req, res) => {
+    const token = req.headers.authorization.split(" ")[1];
+    const { userId } = jwt.verify(token, process.env.SECRET);
+    const { profileImage } = req.body;
+    // console.log(profileImage);
+    try {
+      const user = await User.findByIdAndUpdate(userId, { image: profileImage }, { new: true });
+      res.status(200).json({ profileImage: user.image });
+    } catch (error) {
+      console.error("Error updating profile image:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });

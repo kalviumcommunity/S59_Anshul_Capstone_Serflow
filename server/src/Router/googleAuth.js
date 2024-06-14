@@ -12,8 +12,8 @@ router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/oauth/failureRedirect' }),
   (req, res) => {
     const token = jwt.sign({ userId: req.user._id }, process.env.SECRET, { expiresIn: '1h' });
-    const redirectUrl = `${process.env.FRONTEND_URL}/oauth?token=${token}&userName=${req.user.username}`;
-    console.log('redirectUrl', redirectUrl);
+    const redirectUrl = `${process.env.FRONTEND_URL}/oauth?token=${token}&userName=${req.user.username}&profileImage=${req.user.image}`;
+    // console.log('redirectUrl', redirectUrl);
     res.redirect(redirectUrl);
   }
 );

@@ -10,13 +10,16 @@ function GoogleSuccess() {
 
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
-    const userName = decodeURIComponent(params.get('userName').split(" ")[0] || '');
-
-    console.log(params, "token: ",token,"username:", userName)
+    const userName = decodeURIComponent(params.get('userName') || '');
+    let profileImage = (window.location.search).split("profileImage=")[1]
+    // console.log(params, "token: ",token,"username:", userName)
+    // console.log(params..split("profileImage=")[1])
     useEffect(() => {
       if (token && userName) {
         Cookies.set('token', token, { expires: 1 });
         Cookies.set('userName', userName, { expires: 1 }); 
+        Cookies.set('profileImage', profileImage, { expires: 1 })
+        // console.log("Token:", token, "Username:", userName, "Profile Image:", profileImage)
   
        
         navigate('/dashboard');

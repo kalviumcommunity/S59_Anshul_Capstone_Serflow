@@ -6,9 +6,10 @@ import Logout from './Pages/Logout'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Home from './Pages/Home/Home'
 import Dashboard from './Pages/Dashboard/Dashboard'
-import Tasks from './Pages/Tasks/Tasks'
-import Loading from './components/Loading'
+import Profile from './Pages/Profile/Profile'
 import GoogleSuccess from './components/Auth/GoogleSuccess'
+
+
 function App() {
 
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path={'/loader'} element={<Loader/>} />
         <Route path={'/Dashboard/*'} element={<Dashboard/>} />
         <Route path={'/oauth'} element={<GoogleSuccess/>} />
+        <Route path={'/profile'} element={<Profile/>} />
       </Routes>
     </Router>
     </>

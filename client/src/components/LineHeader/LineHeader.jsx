@@ -7,9 +7,11 @@ import DeleteModal from "../../modals/DeleteModal";
 import { useSelector, useDispatch } from "react-redux";
 import projectSlice from "../../redux/projectSlice";
 import { deleteProjectsAsync } from "./../../redux/thunk";
+import { useNavigate } from "react-router-dom";
 
 function LineHeader({location, type, setProjectModalOpen, projectModalOpen}) {
   const dispatch = useDispatch(); 
+  const navigate = useNavigate();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [openTask, setOpenTask] = useState(false);
   const [isElipseOpen, setIsElipseOpen] = useState(false);
@@ -81,9 +83,13 @@ function LineHeader({location, type, setProjectModalOpen, projectModalOpen}) {
       ) 
       : 
       (<div className="tp-right">
-        <i className="bx bxs-user-circle"></i>
-        <i className="bx bxs-cog"></i>
-        <i className="bx bxs-bell"></i>
+        <i className="bx  bxs-user-circle text-gray-400 cursor-pointer hover:dark:text-white hover:text-black" 
+        onClick={()=>{
+          navigate('/profile')
+        }}
+        ></i>
+        <i className="bx bxs-cog  text-gray-400 cursor-pointer hover:dark:text-white hover:text-black"></i>
+        <i className="bx bxs-bell text-gray-400 cursor-pointer hover:dark:text-white hover:text-black"></i>
       </div>)}
       
       </div>
