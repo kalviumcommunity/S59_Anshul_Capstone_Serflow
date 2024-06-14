@@ -8,11 +8,9 @@ function Profile() {
     const navigate = useNavigate()
 
     const [imageModalOpen, setImageModalOpen] = useState(false)
-    // const [count, setCount] = useState(0)
     const [showOverlay, setShowOverlay] = useState(false);
     const [user,setUser] = useState({})
     const [err, setErr] = useState(null)
-    // console.log(user)
     const getUserDetails = async () => {
         try {
             const response = await fetch(`${import.meta.env.VITE_api_uri}/auth/user`, {
@@ -32,7 +30,6 @@ function Profile() {
                 const data = await response.json()
                 setErr(data.message)
             }
-            // console.log(response)
         } catch (error) {
             console.log(error)
 
@@ -56,7 +53,6 @@ function Profile() {
             <div className="relative z-10 bg-gray-100 rounded-2xl w-full max-w-[800px] mt-20 max-h-[600px] h-2/5 shadow-xl">
             <i
             onClick={()=>{
-                // window.history.back()
                 navigate('/Dashboard')
             }}
             className='bx bx-arrow-back text-4xl m-2 absolute top-0 left-0 cursor-pointer' ></i>
