@@ -51,7 +51,7 @@ function OTPVerification() {
       if (response.ok) {
         setResponse('success', data.message);
         setTimeout(() => {
-          window.location.href = '/auth/login';
+          window.location.href = '/auth';
         },1000);
       } else {
         // console.log(data, data.error)
