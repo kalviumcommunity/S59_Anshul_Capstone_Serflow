@@ -53,7 +53,7 @@ const sendEmail = async (to, user) => {
     return otp;
   } catch (error) {
     console.error('Error sending email:', error);
-    return false;
+    return 
   }
 };
 
