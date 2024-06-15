@@ -131,16 +131,9 @@ const getUser = async(req,res) => {
     
     try {
       const user = await User.findById(userId);
-      res.status(200).json({ user });
+      return res.status(200).json({ user });
     } catch (error) {
       console.error("Error fetching user:", error);
-
-      if (error.name === "JsonWebTokenError") {
-        return res.status(403).json({ error: "Invalid token" });
-      } else if (error.name === "TokenExpiredError") {
-        return res.status(403).json({ error: "Token expired" });
-      }
-  
       res.status(500).json({ error: "Internal server error" });
     }
 }
