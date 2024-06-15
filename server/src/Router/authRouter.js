@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../Models/userSchema');
 const jwt = require('jsonwebtoken'); 
+const OTP = require('./../Models/otpSchema')
+const sendEmail = require('./../Controllers/OTPEmailVerification');
 
 const authenticateToken = (req, res, next) => {
   const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
@@ -40,47 +42,94 @@ router.post("/signup", async (req, res) => {
   
       newUser.setPassword(password);
   
-      await newUser.save();
+      const savedUser = await newUser.save();
+
+      await sendEmail(email, savedUser);
+
+      if (!res.headersSent) {
+        res.status(200).json({ success: true, message: 'OTP sent successfully', email : savedUser.email});
+      }
   
-      res.status(201).json({ message: "User successfully created" });
+      // res.status(201).json({ message: "User successfully created" });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
+
+  // OTP VERIFICATION
+  router.post('/verify-otp', async (req, res) => {
+    const { email, otp } = req.body;
+    try {
+      const user = await User.findOne({ email: email });
+      if (!user) {
+        return res.status(400).json({ error: 'User not found' });
+      }
+      if(user.isVerified){
+        return res.status(409).json({ error: 'User already verified' });
+      }
+      const otpCode = await OTP.findOne({ userID: user._id });
+      if (!otpCode || !(await otpCode.validateOTP(otp.toString()))) {
+        return res.status(400).json({ error: 'Invalid OTP' });
+      }
+      
+      user.isVerified = true;
+      await user.save();
+      
+      return res.status(200).json({ message: 'User verified successfully' });
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
+
+  // Resend OTP 
+  router.post('/resend-otp', async (req, res) => {
+    const { email } = req.body;
+    console.log(email);
+  
+    try {
+      const user = await User.findOne({ email: email });
+      if (!user) {
+        return res.status(400).json({ error: 'User not found' });
+      }
+      
+      const emailRes = await sendEmail(email, user);
+      if (!emailRes) {
+        return res.status(500).json({ error: 'Error sending email' });
+      }
+      return res.status(200).json({ message: "OTP Re-sent Successfully" });
+    } catch (error) {
+      console.error('Error resending OTP:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
   
   // User Authentication
   router.post("/login", async (req, res) => {
     const { email, password } = req.body;
-
+  
     try {
-        const user = await User.findOne({ email });
+      const user = await User.findOne({ email });
   
       if (!user || !user.validatePassword(password)) {
         return res.status(401).json({ error: "Invalid email or password" });
       }
-      
+  
+      if (!user.isVerified) {
+        return res.status(403).json({ error: "User not verified. Check Email to verify." });
+      }
+  
       const token = jwt.sign({ userId: user._id }, process.env.SECRET, { expiresIn: "1h" });
-      const cookieOptions = {
-      httpOnly: false,
-      // path: '/Dashboard',
-      // domain: process.env.NODE_ENV === 'production' ? 'serflow.netlify.app' : 'localhost',
-      maxAge: 60 * 60 * 1000, // 1 hour
-      secure: process.env.NODE_ENV === 'production', // Set Secure attribute if in production
-      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax' // Set SameSite to None if needed
-    };
-
-    // res.cookie("token", token, cookieOptions);
-    // res.cookie("userName", user.username, { ...cookieOptions, httpOnly: false }); // userName cookie does not need to be httpOnly
-
-
-      res.status(200).json({ userName: user.username, userId: user._id, token : token, profileImage: user.image});
+      res.status(200).json({ userName: user.username, userId: user._id, token: token, profileImage: user.image });
     } catch (error) {
       console.error("Error during login:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
-
+  
 
   // User Object
   console.log()
