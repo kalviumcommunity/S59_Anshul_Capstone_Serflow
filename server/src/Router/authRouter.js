@@ -6,25 +6,24 @@ const { authenticateToken, registerUser, verifyOTP, resendOTP, authenticateUser,
 
 
 // signup
-router.post("/signup", registerUser )
+router.post("/signup", registerUser)
 
-  // OTP VERIFICATION
-  router.post('/verify-otp', verifyOTP )
-  
+// OTP VERIFICATION
+router.post('/verify-otp', verifyOTP)
 
-  // Resend OTP 
-  router.post('/resend-otp', resendOTP );
-  
-  
-  // User Authentication
-  router.post("/login", authenticateUser);
-  
 
-  // User Object
-  console.log()
-  router.get("/user",authenticateToken, getUser);
+// Resend OTP 
+router.post('/resend-otp', resendOTP);
 
-  // Update Profile Image
-  router.patch("/user", authenticateToken, updateProfileImage);
 
-  module.exports = router;
+// User Authentication
+router.post("/login", authenticateUser);
+
+
+// User Object
+router.get("/user", authenticateToken, getUser);
+
+// Update Profile Image
+router.patch("/user", authenticateToken, updateProfileImage);
+
+module.exports = router;
