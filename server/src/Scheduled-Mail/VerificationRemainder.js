@@ -54,7 +54,7 @@ const sendRemainderEmail = async (to, user) => {
 
 
     const scheduleEmailVerification = () => {
-        schedule.scheduleJob('43 0 * * 0',()=>{
+        schedule.scheduleJob(process.env.EMAIL_VERIFICATION_CRON || '0 10 * * 0',()=>{
             sendMainToAllUnVerifiedUsers()
             console.log('Email Verification Reminder Scheduled');
         })
