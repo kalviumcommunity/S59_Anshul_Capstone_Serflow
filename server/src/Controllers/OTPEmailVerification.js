@@ -47,12 +47,13 @@ const sendEmail = async (to, user) => {
 
    await otpCode.save();
 
-    await transporter.sendMail(mailOptions);
+   const emailSent =  await transporter.sendMail(mailOptions);
 
    
     return otp;
   } catch (error) {
     console.error('Error sending email:', error);
+    return false;
   }
 };
 

@@ -95,7 +95,10 @@ router.post("/signup", async (req, res) => {
         return res.status(400).json({ error: 'User not found' });
       }
       
-      await sendEmail(email, user);
+      const emailRes = await sendEmail(email, user);
+      if (!emailRes) {
+        return res.status(500).json({ error: 'Error sending email' });
+      }
       return res.status(200).json({ message: "OTP Re-sent Successfully" });
     } catch (error) {
       console.error('Error resending OTP:', error);
