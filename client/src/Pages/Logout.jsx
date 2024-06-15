@@ -23,7 +23,7 @@ export default function LogoutPage(){
         setTimeout(() => {
             // toast.success('Logged out successfully');
             setLoading(false);
-            window.location.href = '/login';
+            window.location.href = '/auth';
         }, 1500);
     }
 

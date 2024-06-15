@@ -107,7 +107,7 @@ function SideNav() {
           </ul>
           <ul className='logout-ul'>
           <li>
-              <Link to='/logout' className='a'>
+              <Link to='/auth/logout' className='a'>
                 <i className='bx bx-log-out'></i>
                 <span className='nav-item'>Logout</span>
               </Link>
