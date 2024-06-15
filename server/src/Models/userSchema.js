@@ -27,7 +27,11 @@ const userSchema = new mongoose.Schema({
     userProjects : [{
       type: mongoose.Schema.Types.ObjectId,
       ref : 'Projects'
-    }]
+    }],
+    isVerified : {
+      type : Boolean,
+      default : false
+    }
   }, { timestamps: true });
 
 

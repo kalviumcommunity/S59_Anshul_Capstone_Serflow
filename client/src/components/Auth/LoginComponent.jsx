@@ -107,7 +107,7 @@ export default function Login() {
             <InfinitySpin
               visible={true}
               width="120"
-              color="#000"
+              color="green"
               ariaLabel="infinity-spin-loading"
             />
           </div>

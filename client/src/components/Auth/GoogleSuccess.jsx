@@ -25,7 +25,7 @@ function GoogleSuccess() {
         navigate('/dashboard');
       } else {
        
-        navigate('/login');
+        navigate('/auth');
       }
     },[navigate])
 

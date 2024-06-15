@@ -17,7 +17,7 @@ const API_URI = `${import.meta.env.VITE_api_uri}/auth/signup`;
 export default function Signup() {
   const [signupState, setSignupState] = useState(fieldsState);
   const [loading, setLoading] = useState(false)
-  const [signupSuccess, setSignupSuccess] = useState(false);
+  // const [signupSuccess, setSignupSuccess] = useState(false);
 
   const handleChange = (e) =>
     setSignupState({ ...signupState, [e.target.id]: e.target.value });
@@ -49,9 +49,10 @@ export default function Signup() {
       const responseData = await response.json();
 
       if (response.ok) {
-        toast.success(responseData.success || "Account created successfully!");
-        setSignupSuccess(true);
-        redirect("/login");
+        // toast.success(responseData.success || "Account created successfully!");
+        // setSignupSuccess(true);
+        console.log(responseData)
+        redirect(`/auth/verify?email=${responseData.email}`);
       } else {
         toast.error(
           responseData.error ||
@@ -94,10 +95,6 @@ export default function Signup() {
                 ariaLabel="infinity-spin-loading"
               />
             </div>
-          </div>
-        ) : signupSuccess ? (
-          <div className="text-white  text-center text-bold bg-green-500 p-2 rounded-lg w-full">
-            Signup Success!
           </div>
         ) : (
           <FormAction handleSubmit={handleSubmit} text="Signup" />

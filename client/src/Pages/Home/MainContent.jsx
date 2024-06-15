@@ -38,7 +38,7 @@ function MainContent() {
 
             <div className="flex items-center flex-row mt-10 justify-between">
               <div className="mr-5">
-                <Link to={'/login'}>
+                <Link to={'/auth'}>
                   <Button
                     variant="contained"
                     sx={{
