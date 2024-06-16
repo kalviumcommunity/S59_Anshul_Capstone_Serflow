@@ -8,6 +8,10 @@ const cors = require('cors')
 const passport = require('passport')
 const session = require('express-session');
 require('./Controllers/passport-config');
+const path = require('path');
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -18,6 +22,7 @@ app.use(passport.initialize());
 app.use(passport.session());  
 
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 const cookieParser = require('cookie-parser');
 app.use(cookieParser())
@@ -28,19 +33,6 @@ const allowedOrigins = [
 ];
 
 
-// app.use(cors({
-//     origin:(origin, callback) => {
-//       if (!origin) return callback(null, true);
-  
-//       if (allowedOrigins.indexOf(origin) !== -1) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error('Not allowed by CORS'));
-//       }
-//     },
-//     credentials: true // Allow cookies to be sent with requests
-//   }));
-
 app.use(cors({
   origin: true,
   credentials: true
@@ -49,5 +41,6 @@ app.use(cors({
 app.use('/oauth',googleAuth)
 app.use("/auth", authRouter)
 app.use("/main", mainRouter)
+
 
 module.exports = app
