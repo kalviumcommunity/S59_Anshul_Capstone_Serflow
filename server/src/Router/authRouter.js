@@ -36,6 +36,7 @@ router.post('/forgot-password', async (req, res) => {
     console.log("post route: ",email)
     try {
         await sendPasswordResetEmail(email);
+        // as defined in the otp model it expires in 5 minutes
         res.redirect(`/auth/verify-reset-otp?email=${encodeURIComponent(email)}`);
     } catch (error) {
         res.status(500).send('Error processing your request.');
