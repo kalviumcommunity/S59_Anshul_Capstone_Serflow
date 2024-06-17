@@ -7,14 +7,15 @@ export default function FormExtra(){
             name="remember-me"
             type="checkbox"
             className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+            hidden
           />
-          <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-            Remember me
-          </label>
+          {/* <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+
+          </label> */}
         </div>
 
         <div className="text-sm">
-          <a href="#" className="font-medium text-red-600 hover:text-red-500">
+          <a href={`${import.meta.env.VITE_api_uri}/auth/forgot-password`} className="font-medium text-red-600 hover:text-red-500">
             Forgot your password?
           </a>
         </div>

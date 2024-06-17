@@ -58,6 +58,7 @@ const registerUser = async (req, res) => {
 
 
 const verifyOTP = async (req, res) => {
+
     const { email, otp } = req.body;
     try {
       const user = await User.findOne({ email: email });
@@ -81,6 +82,7 @@ const verifyOTP = async (req, res) => {
       return res.status(500).json({ error: 'Internal server error' });
     }
 }
+
 
 const resendOTP = async(req,res) => {
     const { email } = req.body;
@@ -151,5 +153,52 @@ const updateProfileImage = async(req,res)=>{
       res.status(500).json({ error: "Internal server error" });
     }
 }
+const verifyOTPPasswordReset = async (req, res, next) => {
+  console.log("verifiyng otp")
+  const { email, otp } = req.body;
+  try {
+    const user = await User.findOne({ email: email });
 
-module.exports = { authenticateToken, registerUser, verifyOTP, resendOTP, authenticateUser, getUser, updateProfileImage };
+    if (!user) {
+      return res.status(400).json({ error: 'User not found' });
+    }
+
+    const otpCode = await OTP.findOne({ userID: user._id });
+    if (!otpCode || !(await otpCode.validateOTP(otp.toString()))) {
+      return res.status(400).json({ error: 'Invalid OTP' });
+    }
+
+    req.otpData = { email, otp };
+    console.log("verified otp")
+
+    return next();
+
+  } catch (error) {
+    console.error('Error verifying OTP:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+const resetPasswordMiddleware = async (req, res, next) => {
+  const email = req.body.email;
+  const otp = req.body.otp;
+  const newPassword = req.body.newPassword;
+
+  console.log(email, otp, newPassword)
+
+  try {
+      const user = await User.findOne({ email: email });
+      if (!user) {
+          return res.status(400).json({ error: 'User not found' });
+      }
+      user.setPassword(newPassword);
+      await user.save();
+      req.passwordResetSuccess = true;
+      next();
+  } catch (error) {
+      console.error('Error resetting password:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+module.exports = { authenticateToken, registerUser, verifyOTP, resendOTP, authenticateUser, getUser, updateProfileImage, verifyOTPPasswordReset, resetPasswordMiddleware };
