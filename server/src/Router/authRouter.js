@@ -55,7 +55,7 @@ router.post('/verify-reset-otp', verifyOTPPasswordReset, async (req, res) => {
     console.log(`/auth/reset-password?email=${email}&otp=${otp}`)
     res.redirect(`/auth/reset-password?email=${email}&otp=${otp}`);
 });
-
+// 
 
 router.get('/reset-password', (req, res) => {
     const email = req.query.email;
