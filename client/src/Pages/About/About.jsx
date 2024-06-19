@@ -37,7 +37,7 @@ function About() {
             alert("Server error. Are you online?");
             return;
         }
-
+        // 
         // Getting the order details back
         const { amount: orderAmount, id: order_id, currency } = result.data;
 
