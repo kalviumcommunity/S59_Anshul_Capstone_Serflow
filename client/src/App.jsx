@@ -9,6 +9,7 @@ import Dashboard from './Pages/Dashboard/Dashboard'
 import Profile from './Pages/Profile/Profile'
 import GoogleSuccess from './components/Auth/GoogleSuccess'
 import Auth from './Pages/Auth/Auth'
+import About from './Pages/About/About'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path={'/Dashboard/*'} element={<Dashboard/>} />
         <Route path={'/oauth'} element={<GoogleSuccess/>} />
         <Route path={'/profile'} element={<Profile/>} />
+        <Route path={'/about'} element={<About/>} />
       </Routes>
     </Router>
     </>
