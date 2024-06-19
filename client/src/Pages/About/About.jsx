@@ -31,13 +31,13 @@ function About() {
         }
 
         // creating a new order
-        const result = await axios.post("http://localhost:5000/payment/orders", { amount: amount * 100 });
+        const result = await axios.post(`${import.meta.env.VITE_api_uri}/payment/orders`, { amount: amount * 100 });
 
         if (!result) {
             alert("Server error. Are you online?");
             return;
         }
-
+        // 
         // Getting the order details back
         const { amount: orderAmount, id: order_id, currency } = result.data;
 
@@ -57,7 +57,7 @@ function About() {
                     razorpaySignature: response.razorpay_signature,
                 };
 
-                const result = await axios.post("http://localhost:5000/payment/success", data);
+                const result = await axios.post(`${import.meta.env.VITE_api_uri}/payment/success`, data);
 
                 alert(result.data.msg);
             },
@@ -115,7 +115,9 @@ function About() {
                                 />
                                 <button
                                     className="bg-red-600 rounded-xl text-white py-2 px-8 hover:bg-red-800 transition duration-300"
-                                    onClick={() => displayRazorpay(amount)}
+                                    onClick={() => {
+                                        // console.log(`${import.meta.env.VITE_api_uri}/payment/orders`)
+                                        displayRazorpay(amount)}}
                                 >
                                     Donate(INR)
                                 </button>
