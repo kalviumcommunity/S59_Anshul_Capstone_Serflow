@@ -1,19 +1,10 @@
 import React, { useState } from 'react';
-import { AvatarCreator } from '@readyplayerme/react-avatar-creator';
 import axios from "axios";
 import { Avatar } from "@readyplayerme/visage";
 import './About.css';
 import HomeNav from './../../components/Navbar/HomeNav';
 
 function About() {
-    const AvatarCreatorConfig = {
-        clearCache: true,
-        bodyType: 'fullbody',
-        quickStart: false,
-        language: 'en',
-    };
-
-    const style = { width: '100%', height: '100vh', border: 'none' };
 
     async function loadScript(src) {
         return new Promise((resolve) => {
@@ -51,7 +42,7 @@ function About() {
         const { amount: orderAmount, id: order_id, currency } = result.data;
 
         const options = {
-            key: "rzp_test_vZtukkmgUkVBiC", // Enter the Key ID generated from the Dashboard
+            key: import.meta.env.VITE_RAZOR_ID, // Enter the Key ID generated from the Dashboard
             amount: orderAmount.toString(),
             currency: currency,
             name: "Serflow.",
@@ -87,12 +78,7 @@ function About() {
         paymentObject.open();
     }
 
-    const [avatarUrl, setAvatarUrl] = useState('');
     const [amount, setAmount] = useState(); // Default donation amount
-
-    const handleOnAvatarExported = (event) => {
-        setAvatarUrl(event.data.url);
-    };
 
     return (
         <>
@@ -105,7 +91,7 @@ function About() {
                         <div className="text-[40px] text-yellow-300">A Budding FullStack Developer</div>
                     </div>
                     <div className="h-full w-2/5">
-                        <Avatar modelSrc={avatarUrl || 'https://models.readyplayer.me/6673184277a449e24d19722b.glb'} />
+                        <Avatar modelSrc={'https://models.readyplayer.me/6673184277a449e24d19722b.glb'} />
                     </div>
                 </div>
                 <div className="text-center w-full mt-10 p-10">
@@ -131,7 +117,7 @@ function About() {
                                     className="bg-red-600 rounded-xl text-white py-2 px-8 hover:bg-red-800 transition duration-300"
                                     onClick={() => displayRazorpay(amount)}
                                 >
-                                    Donate
+                                    Donate(INR)
                                 </button>
                             </div>
                             <div
