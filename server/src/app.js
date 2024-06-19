@@ -3,6 +3,7 @@ const express = require("express")
 const mainRouter = require("./Router/mainRoute")
 const authRouter = require("./Router/authRouter")
 const googleAuth = require("./Router/googleAuth")
+const paymentsRouter = require("./Router/paymentsRouter")
 const app = express()
 const cors = require('cors')
 const passport = require('passport')
@@ -41,6 +42,7 @@ app.use(cors({
 app.use('/oauth',googleAuth)
 app.use("/auth", authRouter)
 app.use("/main", mainRouter)
+app.use('/payment', paymentsRouter)
 
 
 module.exports = app
