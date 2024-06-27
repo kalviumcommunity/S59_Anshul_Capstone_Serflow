@@ -45,7 +45,7 @@ async function createChatUser(username, secret, email, first_name) {
       return {count : unread, data : chatNames};
     } catch (error) {
       // console.log(error.response.status, error.response)
-      return { status: error.response?.status, data: error.response.data };
+      return { status: error.response?.status, data: error.response?.data };
     }
   }
   
