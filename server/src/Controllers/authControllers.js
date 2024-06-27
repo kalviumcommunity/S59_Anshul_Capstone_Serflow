@@ -158,6 +158,7 @@ const updateProfileImage = async(req,res)=>{
     // console.log(profileImage);
     try {
       const user = await User.findByIdAndUpdate(userId, { image: profileImage }, { new: true });
+      await redisClient.setEx(`user:${userId}`,3600, JSON.stringify(user));
       res.status(200).json({ profileImage: user.image });
     } catch (error) {
       console.error("Error updating profile image:", error);
