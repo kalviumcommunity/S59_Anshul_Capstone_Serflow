@@ -204,4 +204,55 @@ const resetPasswordMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { authenticateToken, registerUser, verifyOTP, resendOTP, authenticateUser, getUser, updateProfileImage, verifyOTPPasswordReset, resetPasswordMiddleware };
+function renderForgotPasswordPage(req, res) {
+  res.render('forgot-password');
+}
+
+async function handleForgotPasswordRequest(req, res) {
+  const email = req.body.email;
+  console.log("post route: ", email);
+  try {
+      await sendPasswordResetEmail(email);
+      res.redirect(`/auth/verify-reset-otp?email=${encodeURIComponent(email)}`);
+  } catch (error) {
+      res.status(500).send('Error processing your request.');
+  }
+}
+
+function renderVerifyResetOTPPage(req, res) {
+  const email = req.query.email;
+  res.render('verify-reset-otp', {
+      email
+  });
+}
+
+async function handleVerifyResetOTPRequest(req, res) {
+  const email = req.otpData.email;
+  const otp = req.otpData.otp;
+  res.redirect(`/auth/reset-password?email=${email}&otp=${otp}`);
+}
+
+function renderResetPasswordPage(req, res) {
+  const email = req.query.email;
+  const otp = req.query.otp;
+  res.render('newPassword', {
+      email,
+      otp
+  });
+}
+
+async function handleResetPasswordRequest(req, res) {
+  if (req.passwordResetSuccess) {
+      res.redirect('/auth/reset-success');
+  } else {
+      res.status(500).send('Error resetting password');
+  }
+}
+
+function renderResetSuccessPage(req, res) {
+  res.render('password-reset-success', {
+      frontendUrl: process.env.FRONTEND_URL
+  });
+}
+
+module.exports = { authenticateToken, registerUser, verifyOTP, resendOTP, authenticateUser, getUser, updateProfileImage, verifyOTPPasswordReset, resetPasswordMiddleware, renderForgotPasswordPage, handleForgotPasswordRequest, renderVerifyResetOTPPage, handleVerifyResetOTPRequest, renderResetPasswordPage, handleResetPasswordRequest, renderResetSuccessPage}; 

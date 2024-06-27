@@ -2,79 +2,56 @@ require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 
-const { authenticateToken, registerUser, verifyOTP, resendOTP, authenticateUser, getUser, updateProfileImage, verifyOTPPasswordReset, resetPasswordMiddleware } = require('../Controllers/authControllers');
+const {
+    authenticateToken,
+    registerUser,
+    verifyOTP,
+    resendOTP,
+    authenticateUser,
+    getUser,
+    updateProfileImage,
+    verifyOTPPasswordReset,
+    resetPasswordMiddleware,
+    renderForgotPasswordPage, handleForgotPasswordRequest, renderVerifyResetOTPPage, handleVerifyResetOTPRequest, renderResetPasswordPage, handleResetPasswordRequest, renderResetSuccessPage
+} = require('../Controllers/authControllers');
 
-const { sendPasswordResetEmail } = require('./../Controllers/PasswordResetOTP');
+const {
+    sendPasswordResetEmail
+} = require('./../Controllers/PasswordResetOTP');
 
-// signup
-router.post("/signup", registerUser)
+// Signup
+router.post("/signup", registerUser);
 
-// OTP VERIFICATION
-router.post('/verify-otp', verifyOTP)
+// OTP Verification
+router.post('/verify-otp', verifyOTP);
 
-
-// Resend OTP 
+// Resend OTP
 router.post('/resend-otp', resendOTP);
-
 
 // User Authentication
 router.post("/login", authenticateUser);
 
-
-// User Object
+// Get User Object
 router.get("/user", authenticateToken, getUser);
 
 // Update Profile Image
 router.patch("/user", authenticateToken, updateProfileImage);
 
+// Forgot Password Page
+router.get('/forgot-password', renderForgotPasswordPage);
+router.post('/forgot-password', handleForgotPasswordRequest);
 
-router.get('/forgot-password', (req, res) => {
-    res.render('forgot-password');
-})
-router.post('/forgot-password', async (req, res) => {
-    const email = req.body.email;
-    console.log("post route: ",email)
-    try {
-        await sendPasswordResetEmail(email);
-        // as defined in the otp model it expires in 5 minutes
-        res.redirect(`/auth/verify-reset-otp?email=${encodeURIComponent(email)}`);
-    } catch (error) {
-        res.status(500).send('Error processing your request.');
-    }
-});
+// Verify Reset OTP Page
+router.get('/verify-reset-otp', renderVerifyResetOTPPage);
+router.post('/verify-reset-otp', handleVerifyResetOTPRequest);
+
+// Reset Password Page
+router.get('/reset-password', renderResetPasswordPage);
+router.post('/reset-password', handleResetPasswordRequest);
+
+// Reset Success Page
+router.get('/reset-success', renderResetSuccessPage);
 
 
-router.get('/verify-reset-otp', (req, res) => {
-    const email = req.query.email;
-    res.render('verify-reset-otp', { email });
-});
-
-router.post('/verify-reset-otp', verifyOTPPasswordReset, async (req, res) => {
-    console.log("hello")
-    const email = req.otpData.email
-    const otp = req.otpData.otp
-    console.log(`/auth/reset-password?email=${email}&otp=${otp}`)
-    res.redirect(`/auth/reset-password?email=${email}&otp=${otp}`);
-});
-// 
-
-router.get('/reset-password', (req, res) => {
-    const email = req.query.email;
-    const otp = req.query.otp
-    console.log("get", email, otp)
-    res.render('newPassword', { email, otp });
-});
-
-router.post('/reset-password', resetPasswordMiddleware, async (req, res) => {
-    if (req.passwordResetSuccess) {
-        res.redirect('/auth/reset-success');
-    } else {
-        res.status(500).send('Error resetting password');
-    }
-});
-
-router.get('/reset-success', (req, res) => {
-    res.render('password-reset-success', {frontendUrl: process.env.FRONTEND_URL});
-});
 
 module.exports = router;
