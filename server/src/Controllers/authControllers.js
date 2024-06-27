@@ -4,6 +4,12 @@ const jwt = require('jsonwebtoken');
 const OTP = require('./../Models/otpSchema')
 const sendEmail = require('./OTPEmailVerification');
 const {createChatUser} = require('./chatControllers.js');
+const {redisClient} = require('./redisClient.js'); // Import your Redis client
+
+const {
+  sendPasswordResetEmail
+} = require('./PasswordResetOTP');
+
 
 const authenticateToken = (req, res, next) => {
   const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
@@ -130,17 +136,19 @@ const authenticateUser = async (req, res) => {
     }
 }
 
+
 const getUser = async(req,res) => {
-    const token = req.headers.authorization.split(" ")[1];
-    const { userId } = jwt.verify(token, process.env.SECRET);
-    
-    try {
-      const user = await User.findById(userId);
-      return res.status(200).json({ user });
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ error: "Internal server error" });
-    }
+  const token = req.headers.authorization.split(" ")[1];
+  const { userId } = jwt.verify(token, process.env.SECRET);
+  
+  try {
+    const user = await User.findById(userId);
+    await redisClient.setEx(`user:${userId}`,3600, JSON.stringify(user));
+    return res.status(200).json({ user });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
 
 const updateProfileImage = async(req,res)=>{
@@ -212,7 +220,7 @@ async function handleForgotPasswordRequest(req, res) {
   const email = req.body.email;
   console.log("post route: ", email);
   try {
-      await sendPasswordResetEmail(email);
+      const e = await sendPasswordResetEmail(email);
       res.redirect(`/auth/verify-reset-otp?email=${encodeURIComponent(email)}`);
   } catch (error) {
       res.status(500).send('Error processing your request.');

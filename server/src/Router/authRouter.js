@@ -15,9 +15,7 @@ const {
     renderForgotPasswordPage, handleForgotPasswordRequest, renderVerifyResetOTPPage, handleVerifyResetOTPRequest, renderResetPasswordPage, handleResetPasswordRequest, renderResetSuccessPage
 } = require('../Controllers/authControllers');
 
-const {
-    sendPasswordResetEmail
-} = require('./../Controllers/PasswordResetOTP');
+const {getUserData} = require('../Controllers/redisClient');
 
 // Signup
 router.post("/signup", registerUser);
@@ -32,7 +30,7 @@ router.post('/resend-otp', resendOTP);
 router.post("/login", authenticateUser);
 
 // Get User Object
-router.get("/user", authenticateToken, getUser);
+router.get("/user", authenticateToken,getUserData, getUser);
 
 // Update Profile Image
 router.patch("/user", authenticateToken, updateProfileImage);
