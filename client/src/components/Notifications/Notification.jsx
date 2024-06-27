@@ -33,7 +33,7 @@ const Notifications = ({notification, setNotification, isNotificaionsVisible, se
               <i className="fa-solid fa-chevron-down text-gray-600 group-hover:text-indigo-600 animate-bounce"></i>
             </button>
             <div id="messages" className='p-2'>
-             {notification?.count != null ? notification.data.map((item, index) => {
+             {notification?.count != null && notification.data.map((item, index) => {
               return (
                 <NotificationItem
                   key={index}
@@ -43,9 +43,11 @@ const Notifications = ({notification, setNotification, isNotificaionsVisible, se
                   message={`You have a new Message from ${item}`}
                 />
               )
-             }) : 
+             })} 
+             
+             {notification?.count == 0 && 
               <NotificationItem
-                icon="trello"
+                icon="notepad"
                 title="No Notifications"
                 // time="8:24AM"
                 message="You have no new messages"

@@ -104,12 +104,12 @@ function LineHeader({location, type, setProjectModalOpen, projectModalOpen, noti
         <div 
         className="flex justify-end"
         >
-        {notificationsLoading ? <i className={` text-gray-400 bx bxs-${notification?.count != undefined ? 'bell-plus' : 'bell'}  cursor-pointer hover:dark:text-white hover:text-black relative`}
+        {notificationsLoading ? <i className={` text-gray-400 bx bxs-bell  cursor-pointer hover:dark:text-white hover:text-black relative`}
         onClick={()=>{
           
           setNotificaionsVisible(prev => !prev)
         }}
-        ></i> : <i className={`text-gray-400 bx bxs-${notification?.count != undefined ? 'bell-plus text-red-300' : 'bell'}  cursor-pointer hover:dark:text-white hover:text-black relative`}
+        ></i> : <i className={`text-gray-400 bx bxs-${notification?.count != 0 ? 'bell-plus text-red-300' : 'bell'}  cursor-pointer hover:dark:text-white hover:text-black relative`}
         onClick={()=>{
           
           setNotificaionsVisible(prev => !prev)
