@@ -16,7 +16,7 @@ const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   scheduleEmailVerification();
   socketServer.listen(PORT + 1, () => {
-    console.log(`Socket Server is running on port ${PORT + 1}`);
+    console.log(`Socket Server is running on port ${PORT + 1}`); //port is taken from env and in just incremented to accomodate soket server
   })
   });
   
