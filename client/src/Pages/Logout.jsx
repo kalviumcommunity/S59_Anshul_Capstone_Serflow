@@ -20,6 +20,7 @@ export default function LogoutPage(){
         Cookies.remove('userName');
         Cookies.remove('profileImage');
         Cookies.remove('data');
+        Cookies.remove('UID');
         setTimeout(() => {
             // toast.success('Logged out successfully');
             setLoading(false);

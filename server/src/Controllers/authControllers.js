@@ -3,9 +3,11 @@ const User = require('../Models/userSchema');
 const jwt = require('jsonwebtoken'); 
 const OTP = require('./../Models/otpSchema')
 const sendEmail = require('./OTPEmailVerification');
+const {createChatUser} = require('./chatControllers.js');
 
 const authenticateToken = (req, res, next) => {
-    const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
+  const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
+  // console.log(token)
   
     if (!token) return res.status(401).json({ message: 'Access token is missing' });
   
@@ -15,8 +17,7 @@ const authenticateToken = (req, res, next) => {
           return res.status(401).json({ message: 'Access token expired' });
         }
         return res.status(401).json({ message: 'Access token is invalid' });
-      }
-  
+      }  
       req.user = user;
       next();
     });
@@ -75,6 +76,8 @@ const verifyOTP = async (req, res) => {
       
       user.isVerified = true;
       await user.save();
+
+      await createChatUser(user.username, user._id.toString(), user.email, user.username);
       
       return res.status(200).json({ message: 'User verified successfully' });
     } catch (error) {

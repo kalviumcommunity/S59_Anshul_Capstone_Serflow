@@ -2,6 +2,7 @@ require('dotenv').config();
 const passport = require('passport');
 const User = require('../Models/userSchema');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const {createChatUser} = require('./chatControllers');
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -25,6 +26,8 @@ passport.use(new GoogleStrategy({
       });
 
       user = await newUser.save();
+
+      await createChatUser(user.username,  user._id.toString(), user.email, user.username);
       return done(null, user);
 
     } catch (err) {
