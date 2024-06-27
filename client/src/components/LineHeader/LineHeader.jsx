@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddEditTaskModal from "../../modals/AddEditTaskModal";
 import AddEditProjectModal from "../../modals/AddEditProjectModal";
 import ElipseMenu from "./ElipseMenu";
@@ -8,14 +8,17 @@ import { useSelector, useDispatch } from "react-redux";
 import projectSlice from "../../redux/projectSlice";
 import { deleteProjectsAsync } from "./../../redux/thunk";
 import { useNavigate } from "react-router-dom";
+import Notifications from './../Notifications/Notification'
 
-function LineHeader({location, type, setProjectModalOpen, projectModalOpen}) {
+function LineHeader({location, type, setProjectModalOpen, projectModalOpen, notification, setNotification}) {
   const dispatch = useDispatch(); 
   const navigate = useNavigate();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [openTask, setOpenTask] = useState(false);
   const [isElipseOpen, setIsElipseOpen] = useState(false);
   const [boardType, setBoardType] = useState("add");
+  const [isNotificaionsVisible, setNotificaionsVisible] = useState(false);
+  const [notificationsLoading, setNotificationsLoading] = useState(true);
   const project = useSelector(state => state.projects.projects.find(project => project.isActive));
 
   const setOpenEditModal = () => {
@@ -40,8 +43,17 @@ function LineHeader({location, type, setProjectModalOpen, projectModalOpen}) {
     }
   }
 
+  useEffect(() => {
+    // Simulate fetching notifications
+    setTimeout(() => {
+      setNotificationsLoading(false); // Set to false after notifications are loaded
+    }, 10000); // Adjust the timeout as needed
+  }, []);
+
   return (
     <div>
+        <Notifications notification={notification} setNotification={setNotification} isNotificaionsVisible={isNotificaionsVisible} setNotificaionsVisible={setNotificaionsVisible} />
+
     <div className="top-bar">
       <div className="tp-left">
         <div className="pageTile-top">
@@ -89,7 +101,21 @@ function LineHeader({location, type, setProjectModalOpen, projectModalOpen}) {
         }}
         ></i>
         <i className="bx bxs-cog  text-gray-400 cursor-pointer hover:dark:text-white hover:text-black"></i>
-        <i className="bx bxs-bell text-gray-400 cursor-pointer hover:dark:text-white hover:text-black"></i>
+        <div 
+        className="flex justify-end"
+        >
+        {notificationsLoading ? <i className={` text-gray-400 bx bxs-${notification?.count != undefined ? 'bell-plus' : 'bell'}  cursor-pointer hover:dark:text-white hover:text-black relative`}
+        onClick={()=>{
+          
+          setNotificaionsVisible(prev => !prev)
+        }}
+        ></i> : <i className={`text-gray-400 bx bxs-${notification?.count != undefined ? 'bell-plus text-red-300' : 'bell'}  cursor-pointer hover:dark:text-white hover:text-black relative`}
+        onClick={()=>{
+          
+          setNotificaionsVisible(prev => !prev)
+        }}
+        ></i>}
+        </div>
       </div>)}
       
       </div>

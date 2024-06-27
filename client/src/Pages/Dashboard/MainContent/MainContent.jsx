@@ -9,7 +9,7 @@ import projectSlice from "../../../redux/projectSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchProjects } from "../../../redux/thunk";
 
-function MainContent({ modalOpen, setModalOpen }) {
+function MainContent({ modalOpen, setModalOpen, notification, setNotification}) {
   const navigate = useNavigate();
   const [data, setData] = useState(useSelector((state) => state.projects))
   const [projectType, setProjectType] = useState("add")
@@ -34,7 +34,7 @@ function MainContent({ modalOpen, setModalOpen }) {
   return (
     <div className="main-content transition-all ease-in-out dark:bg-[#2b2c37]">
       <div className="">
-        <LineHeader location={"Dashboard"} setProjectModalOpen={setModalOpen} modalOpen={modalOpen}/>
+        <LineHeader location={"Dashboard"} setProjectModalOpen={setModalOpen} modalOpen={modalOpen} notification={notification} setNotification={setNotification}/>
         {/* <div className="cards-box">
           <div className="card">
             <div className="card icon">

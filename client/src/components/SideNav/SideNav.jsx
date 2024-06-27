@@ -98,11 +98,11 @@ function SideNav() {
               <span className='tooltip'>Notifications</span>
             </li>
             <li>
-              <Link to='/dashboard' className='a'>
+              <Link to='/dashboard/chats' className='a'>
                 <i className='bx bx-chat'></i>
-                <span className='nav-item'>Messages</span>
+                <span className='nav-item'>Chats</span>
               </Link>
-              <span className='tooltip'>Messages</span>
+              <span className='tooltip'>Chats</span>
             </li>
           </ul>
           <ul className='logout-ul'>
