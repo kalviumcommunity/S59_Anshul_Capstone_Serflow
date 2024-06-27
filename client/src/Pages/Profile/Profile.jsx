@@ -25,7 +25,8 @@ function Profile() {
                 let expiration = new Date();
                 expiration.setTime(expiration.getTime() + (5 * 60 * 1000));
                 Cookies.set('data', JSON.stringify(data), { expires: expiration })
-                setUser(data.user)
+                console.log(data)
+                setUser(data)
             }else{
                 const data = await response.json()
                 setErr(data.message)
