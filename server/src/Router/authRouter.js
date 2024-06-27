@@ -43,11 +43,11 @@ router.post('/forgot-password', handleForgotPasswordRequest);
 
 // Verify Reset OTP Page
 router.get('/verify-reset-otp', renderVerifyResetOTPPage);
-router.post('/verify-reset-otp', handleVerifyResetOTPRequest);
+router.post('/verify-reset-otp', verifyOTPPasswordReset,handleVerifyResetOTPRequest);
 
 // Reset Password Page
 router.get('/reset-password', renderResetPasswordPage);
-router.post('/reset-password', handleResetPasswordRequest);
+router.post('/reset-password', resetPasswordMiddleware, handleResetPasswordRequest);
 
 // Reset Success Page
 router.get('/reset-success', renderResetSuccessPage);
