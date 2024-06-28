@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
+const rateLimit = require('express-rate-limit');
 
 const {
     authenticateToken,
@@ -17,6 +18,15 @@ const {
 
 const {getUserData} = require('../Controllers/redisClient');
 
+const resendOtpLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 3, // limit each IP to 3 requests per windowMs
+    message: {
+      status: 429,
+      message: "Too many requests, please try again later."
+    }
+});
+
 // Signup
 router.post("/signup", registerUser);
 
@@ -24,7 +34,7 @@ router.post("/signup", registerUser);
 router.post('/verify-otp', verifyOTP);
 
 // Resend OTP
-router.post('/resend-otp', resendOTP);
+router.post('/resend-otp', resendOtpLimiter, resendOTP);
 
 // User Authentication
 router.post("/login", authenticateUser);
